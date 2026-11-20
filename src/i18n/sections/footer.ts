@@ -19,6 +19,8 @@ type FooterCopy = {
   copyright: string;
   openSource: string;
   languageLabel: string;
+  imprint: string;
+  privacy: string;
 };
 
 export const copy: Localized<FooterCopy> = {
@@ -57,6 +59,8 @@ export const copy: Localized<FooterCopy> = {
     copyright: "© 2026 OpenStatusPage contributors",
     openSource: "Open source under AGPL-3.0",
     languageLabel: "Language",
+    imprint: "Legal notice",
+    privacy: "Privacy policy",
   },
   de: {
     tagline:
@@ -93,5 +97,7 @@ export const copy: Localized<FooterCopy> = {
     copyright: "© 2026 OpenStatusPage-Mitwirkende",
     openSource: "Open Source unter AGPL-3.0",
     languageLabel: "Sprache",
+    imprint: "Impressum",
+    privacy: "Datenschutz",
   },
 };

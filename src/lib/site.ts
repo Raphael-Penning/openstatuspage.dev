@@ -14,7 +14,10 @@ export const site = {
   apiDocs: "https://github.com/Raphael-Penning/openstatuspage/blob/main/docs/api.md",
   changelog: "https://github.com/Raphael-Penning/openstatuspage/blob/main/CHANGELOG.md",
   contributing: "https://github.com/Raphael-Penning/openstatuspage/blob/main/CONTRIBUTING.md",
-  sponsorMail: "mailto:hello@openstatuspage.dev",
+  /** Last content update, used as <lastmod> in the sitemaps. */
+  updated: "2026-11-20",
+  email: "penning@partlabs.de",
+  sponsorMail: "mailto:penning@partlabs.de",
 } as const;
 
 export type ScreenshotName =

@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+
+const noop = () => () => {};
+/** True only in the browser after hydration, so the button never shows without JavaScript. */
+const useHydrated = () => useSyncExternalStore(noop, () => true, () => false);
 
 type Labels = {
   copy: string;
@@ -14,6 +18,7 @@ type State = "idle" | "copied" | "failed";
 
 /** Small clipboard button. All text comes in via props (localized on the server). */
 export function CopyButton({ text, labels }: { text: string; labels: Labels }) {
+  const hydrated = useHydrated();
   const [state, setState] = useState<State>("idle");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -31,6 +36,8 @@ export function CopyButton({ text, labels }: { text: string; labels: Labels }) {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => setState("idle"), 2000);
   }
+
+  if (!hydrated) return null;
 
   return (
     <>

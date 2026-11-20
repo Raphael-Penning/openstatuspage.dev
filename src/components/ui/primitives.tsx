@@ -57,7 +57,7 @@ export function ButtonLink({ variant = "primary", className, href = "#", ...prop
       className={cx(
         "inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
         variant === "primary" &&
-          "bg-accent text-white shadow-[0_0_0_1px_rgb(255_255_255/0.12)_inset,0_8px_24px_-8px_rgb(59_130_246/0.6)] hover:bg-accent-strong",
+          "bg-accent-strong text-white shadow-[0_0_0_1px_rgb(255_255_255/0.12)_inset,0_8px_24px_-8px_rgb(59_130_246/0.6)] hover:bg-accent-deep",
         variant === "secondary" && "border border-line-strong bg-surface-2/60 text-fg hover:bg-surface-2",
         variant === "ghost" && "text-muted hover:text-fg",
         className,

@@ -1,62 +1,62 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import { hasLocale, locales } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import "../globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "swap" });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" });
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
-const meta = {
-  en: {
-    title: "OpenStatusPage — the self-hosted, open-source status page",
-    description:
-      "Keep your customers informed without exposing your infrastructure. Compose public services from Icinga 2, Uptime Kuma, openITCockpit or webhooks. Self-hosted, AGPL-3.0.",
-  },
-  de: {
-    title: "OpenStatusPage — die selbst gehostete Open-Source-Statusseite",
-    description:
-      "Informiere deine Kunden, ohne deine Infrastruktur offenzulegen. Öffentliche Dienste aus Icinga 2, Uptime Kuma, openITCockpit oder Webhooks zusammensetzen. Selbst gehostet, AGPL-3.0.",
-  },
+const skipLabel = { en: "Skip to content", de: "Zum Inhalt springen" } as const;
+
+export const viewport: Viewport = {
+  themeColor: "#08090b",
+  colorScheme: "dark",
 };
 
-export async function generateMetadata({
-  params,
-}: LayoutProps<"/[lang]">): Promise<Metadata> {
-  const { lang } = await params;
-  const m = hasLocale(lang) ? meta[lang] : meta.en;
-  return {
-    metadataBase: new URL(site.url),
-    title: m.title,
-    description: m.description,
-    alternates: {
-      canonical: `/${lang}`,
-      languages: { en: "/en", de: "/de", "x-default": "/en" },
-    },
-    openGraph: {
-      type: "website",
-      url: `/${lang}`,
-      siteName: site.name,
-      title: m.title,
-      description: m.description,
-      images: [{ url: `/screenshots/overview-dark-${lang}.png`, width: 2880, height: 1800 }],
-      locale: lang === "de" ? "de_DE" : "en_US",
-    },
-    twitter: { card: "summary_large_image", title: m.title, description: m.description },
-  };
-}
+/** Site-wide defaults; every page sets its own title, canonical and hreflang. */
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title: { default: site.name, template: `%s · ${site.name}` },
+  applicationName: site.name,
+  creator: "Raphael Penning",
+  authors: [{ name: "Raphael Penning", url: site.github }],
+  category: "technology",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+  formatDetection: { telephone: false, email: false, address: false },
+  // Google Search Console: set GOOGLE_SITE_VERIFICATION at build time to emit the meta tag.
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
+};
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   return (
     <html lang={lang} className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <body className="min-h-dvh bg-bg text-fg">{children}</body>
+      <head>
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
+        <link rel="ard" type="application/json" href="/.well-known/ard.json" />
+      </head>
+      <body className="min-h-dvh bg-bg text-fg">
+        <a
+          href="#main"
+          className="sr-only z-[100] rounded-md bg-accent-strong px-4 py-2 text-sm font-medium text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+        >
+          {skipLabel[lang]}
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

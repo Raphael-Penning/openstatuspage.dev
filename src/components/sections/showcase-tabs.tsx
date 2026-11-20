@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { BrowserFrame, cx } from "@/components/ui/primitives";
 import type { ShowcaseTabCopy } from "@/i18n/sections/showcase";
 
@@ -55,153 +52,129 @@ function SunIcon() {
   );
 }
 
+const viewId = (id: string) => `showcase-view-${id}`;
+const themeId = (t: Theme) => `showcase-theme-${t}`;
+
+/**
+ * Product tour without JavaScript: native radio groups pick the view and the
+ * theme, CSS `:has()` shows the matching panel and screenshot. Arrow keys move
+ * between radios natively. Browsers without `:has()` simply show every panel.
+ * Images of hidden panels are lazy and only load once their panel is shown.
+ */
 export function ShowcaseTabs({ items, labels }: { items: ShowcaseItem[]; labels: ShowcaseLabels }) {
-  const [active, setActive] = useState(0);
-  const [theme, setTheme] = useState<Theme>("dark");
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const baseId = useId();
+  const css = `@supports selector(:has(*)) {
+  .showcase [data-view] { display: none; }
+  ${items.map((it) => `.showcase:has(#${viewId(it.id)}:checked) [data-view="${it.id}"]`).join(",\n  ")} { display: block; }
+  .showcase [data-shot="light"] { display: none; }
+  .showcase:has(#${themeId("light")}:checked) [data-shot="light"] { display: block; }
+  .showcase:has(#${themeId("light")}:checked) [data-shot="dark"] { display: none; }
+}`;
 
-  const tabId = (i: number) => `${baseId}-tab-${i}`;
-  const panelId = (i: number) => `${baseId}-panel-${i}`;
-
-  const select = (i: number) => {
-    const next = (i + items.length) % items.length;
-    setActive(next);
-    const el = tabRefs.current[next];
-    el?.focus();
-    el?.scrollIntoView({ block: "nearest", inline: "nearest" });
-  };
-
-  const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-    const keys: Record<string, () => void> = {
-      ArrowRight: () => select(active + 1),
-      ArrowLeft: () => select(active - 1),
-      Home: () => select(0),
-      End: () => select(items.length - 1),
-    };
-    const handler = keys[e.key];
-    if (handler) {
-      e.preventDefault();
-      handler();
-    }
-  };
+  const pill =
+    "relative inline-flex cursor-pointer items-center whitespace-nowrap rounded-full transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent";
 
   return (
-    <div>
-      {/* Tabs scroll inside their own container on small screens. */}
-      <div className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
-        <div
-          role="tablist"
-          aria-label={labels.tabs}
-          className="mx-auto flex w-max gap-1 rounded-full border border-line bg-surface/80 p-1 backdrop-blur"
-        >
-          {items.map((item, i) => {
-            const selected = i === active;
-            return (
-              <button
-                key={item.id}
-                ref={(el) => {
-                  tabRefs.current[i] = el;
-                }}
-                id={tabId(i)}
-                type="button"
-                role="tab"
-                aria-selected={selected}
-                aria-controls={panelId(i)}
-                tabIndex={selected ? 0 : -1}
-                onClick={() => setActive(i)}
-                onKeyDown={onKeyDown}
-                className={cx(
-                  "whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
-                  selected
-                    ? "bg-surface-2 text-fg shadow-[0_0_0_1px_var(--color-line-strong)_inset]"
-                    : "text-muted hover:text-fg",
-                )}
-              >
-                {item.label}
-              </button>
-            );
-          })}
+    <div className="showcase">
+      <style>{css}</style>
+
+      {/* Views scroll inside their own container on small screens. */}
+      <fieldset className="-mx-4 overflow-x-auto px-4 py-1 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
+        <legend className="sr-only">{labels.tabs}</legend>
+        <div className="mx-auto flex w-max gap-1 rounded-full border border-line bg-surface/80 p-1 backdrop-blur">
+          {items.map((item, i) => (
+            <label
+              key={item.id}
+              className={cx(
+                pill,
+                "px-4 py-2 text-sm font-medium text-muted hover:text-fg has-[:checked]:bg-surface-2 has-[:checked]:text-fg has-[:checked]:shadow-[0_0_0_1px_var(--color-line-strong)_inset]",
+              )}
+            >
+              <input
+                type="radio"
+                name="showcase-view"
+                id={viewId(item.id)}
+                value={item.id}
+                defaultChecked={i === 0}
+                className="sr-only"
+              />
+              {item.label}
+            </label>
+          ))}
         </div>
-      </div>
+      </fieldset>
 
       <div className="mt-4 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-3">
-        <div
-          role="group"
-          aria-label={labels.theme}
-          className="inline-flex gap-0.5 rounded-full border border-line bg-surface/60 p-0.5"
-        >
-          {(["dark", "light"] as const).map((value) => {
-            const pressed = theme === value;
-            return (
-              <button
-                key={value}
-                type="button"
-                aria-pressed={pressed}
-                onClick={() => setTheme(value)}
-                className={cx(
-                  "inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
-                  pressed ? "bg-surface-2 text-fg" : "text-subtle hover:text-fg",
-                )}
-              >
-                {value === "dark" ? <MoonIcon /> : <SunIcon />}
-                {value === "dark" ? labels.dark : labels.light}
-              </button>
-            );
-          })}
-        </div>
-        <p className="text-xs text-subtle">{labels.hint}</p>
+        <fieldset className="inline-flex gap-0.5 rounded-full border border-line bg-surface/60 p-0.5">
+          <legend className="sr-only">{labels.theme}</legend>
+          {(["dark", "light"] as const).map((value) => (
+            <label
+              key={value}
+              className={cx(
+                pill,
+                "gap-1.5 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted hover:text-fg has-[:checked]:bg-surface-2 has-[:checked]:text-fg",
+              )}
+            >
+              <input
+                type="radio"
+                name="showcase-theme"
+                id={themeId(value)}
+                value={value}
+                defaultChecked={value === "dark"}
+                className="sr-only"
+              />
+              {value === "dark" ? <MoonIcon /> : <SunIcon />}
+              {value === "dark" ? labels.dark : labels.light}
+            </label>
+          ))}
+        </fieldset>
+        <p className="text-xs text-muted">{labels.hint}</p>
       </div>
 
-      {items.map((item, i) => {
-        const shot = item.images[theme];
-        return (
-          <div
-            key={item.id}
-            id={panelId(i)}
-            role="tabpanel"
-            aria-labelledby={tabId(i)}
-            tabIndex={0}
-            hidden={i !== active}
-            className="mt-10 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-          >
-            <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
-              <div className="max-w-xl">
-                <h3 className="text-xl font-semibold tracking-tight text-fg sm:text-2xl">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-pretty text-muted">{item.description}</p>
-              </div>
-              <ul className="grid gap-2.5 text-sm text-muted sm:grid-cols-3 sm:gap-4 lg:grid-cols-1 lg:gap-2.5">
-                {item.bullets.map((bullet) => (
-                  <li key={bullet} className="flex gap-2">
-                    <CheckIcon />
-                    <span>{bullet}</span>
-                  </li>
-                ))}
-              </ul>
+      {items.map((item) => (
+        <section key={item.id} data-view={item.id} aria-label={item.label} className="mt-10">
+          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
+            <div className="max-w-xl">
+              <h3 className="text-xl font-semibold tracking-tight text-fg sm:text-2xl">
+                {item.title}
+              </h3>
+              <p className="mt-3 text-pretty text-muted">{item.description}</p>
             </div>
-
-            <div className="relative isolate mt-8">
-              <div
-                className="pointer-events-none absolute -inset-x-8 -top-8 bottom-1/3 -z-10 rounded-[3rem] bg-accent/15 blur-3xl"
-                aria-hidden
-              />
-              <BrowserFrame url={item.url}>
-                <Image
-                  key={shot.src}
-                  src={shot.src}
-                  width={shot.width}
-                  height={shot.height}
-                  alt={item.alt}
-                  sizes="(min-width:1024px) 1000px, 100vw"
-                  className="block h-auto w-full animate-fade-up"
-                />
-              </BrowserFrame>
-            </div>
+            <ul className="grid gap-2.5 text-sm text-muted sm:grid-cols-3 sm:gap-4 lg:grid-cols-1 lg:gap-2.5">
+              {item.bullets.map((bullet) => (
+                <li key={bullet} className="flex gap-2">
+                  <CheckIcon />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        );
-      })}
+
+          <div className="relative isolate mt-8">
+            <div
+              className="pointer-events-none absolute -inset-x-8 -top-8 bottom-1/3 -z-10 rounded-[3rem] bg-accent/15 blur-3xl"
+              aria-hidden
+            />
+            <BrowserFrame url={item.url}>
+              {(["dark", "light"] as const).map((theme) => {
+                const shot = item.images[theme];
+                return (
+                  <Image
+                    key={theme}
+                    data-shot={theme}
+                    src={shot.src}
+                    width={shot.width}
+                    height={shot.height}
+                    alt={item.alt}
+                    loading="lazy"
+                    sizes="(min-width: 1152px) 1088px, calc(100vw - 2rem)"
+                    className="h-auto w-full"
+                  />
+                );
+              })}
+            </BrowserFrame>
+          </div>
+        </section>
+      ))}
     </div>
   );
 }

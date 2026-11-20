@@ -1,5 +1,6 @@
 import { locales, pick, type Locale } from "@/lib/i18n";
 import { site } from "@/lib/site";
+import { anchor, homeAlternates, type Alternates } from "@/lib/routes";
 import { ButtonLink, Container, cx } from "@/components/ui/primitives";
 import { copy } from "@/i18n/sections/navbar";
 import { NavbarMobile } from "./navbar-mobile";
@@ -12,7 +13,7 @@ export function LogoMark({ className }: { className?: string }) {
       aria-hidden
       className={cx("size-7 shrink-0", className)}
     >
-      <rect width="32" height="32" rx="8" className="fill-accent" />
+      <rect width="32" height="32" rx="8" className="fill-accent-strong" />
       <path
         d="M6 17h5l2.5-6 4.5 11 2.5-5H26"
         fill="none"
@@ -48,11 +49,13 @@ export function LanguageSwitch({
   lang,
   label,
   names,
+  hrefs = homeAlternates,
   className,
 }: {
   lang: Locale;
   label: string;
   names: Record<Locale, string>;
+  hrefs?: Alternates;
   className?: string;
 }) {
   return (
@@ -62,7 +65,7 @@ export function LanguageSwitch({
         return (
           <a
             key={l}
-            href={`/${l}`}
+            href={hrefs[l]}
             hrefLang={l}
             lang={l}
             aria-current={current ? "page" : undefined}
@@ -81,7 +84,7 @@ export function LanguageSwitch({
   );
 }
 
-export function Navbar({ lang }: { lang: Locale }) {
+export function Navbar({ lang, alternates }: { lang: Locale; alternates?: Alternates }) {
   const t = pick(copy, lang);
   return (
     <header className="sticky top-0 z-50 border-b border-line/70 bg-bg/70 backdrop-blur-xl supports-[backdrop-filter]:bg-bg/55">
@@ -100,7 +103,7 @@ export function Navbar({ lang }: { lang: Locale }) {
             {t.links.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={anchor(link.href, lang)}
                   className="whitespace-nowrap rounded-md px-2 py-2 text-sm text-muted transition-colors hover:text-fg xl:px-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
                   {link.label}
@@ -111,7 +114,7 @@ export function Navbar({ lang }: { lang: Locale }) {
         </nav>
 
         <div className="ml-auto hidden items-center gap-3 lg:ml-2 lg:flex">
-          <LanguageSwitch lang={lang} label={t.languageLabel} names={t.languages} />
+          <LanguageSwitch lang={lang} label={t.languageLabel} names={t.languages} hrefs={alternates} />
           <a
             href={site.github}
             target="_blank"
@@ -132,7 +135,7 @@ export function Navbar({ lang }: { lang: Locale }) {
               {t.links.map((link) => (
                 <li key={link.href}>
                   <a
-                    href={link.href}
+                    href={anchor(link.href, lang)}
                     className="block rounded-lg px-3 py-3 text-base text-muted transition-colors hover:bg-surface-2 hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
                     {link.label}
@@ -142,7 +145,7 @@ export function Navbar({ lang }: { lang: Locale }) {
             </ul>
           </nav>
           <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-4">
-            <LanguageSwitch lang={lang} label={t.languageLabel} names={t.languages} />
+            <LanguageSwitch lang={lang} label={t.languageLabel} names={t.languages} hrefs={alternates} />
             <a
               href={site.github}
               target="_blank"

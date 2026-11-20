@@ -1,5 +1,6 @@
 import { pick, type Locale } from "@/lib/i18n";
 import { site } from "@/lib/site";
+import { anchor, legalPath, type Alternates } from "@/lib/routes";
 import { Container } from "@/components/ui/primitives";
 import { copy } from "@/i18n/sections/footer";
 import { copy as navCopy } from "@/i18n/sections/navbar";
@@ -38,7 +39,7 @@ function Column({ title, links }: { title: string; links: FooterLink[] }) {
   );
 }
 
-export function Footer({ lang }: { lang: Locale }) {
+export function Footer({ lang, alternates }: { lang: Locale; alternates?: Alternates }) {
   const t = pick(copy, lang);
   const nav = pick(navCopy, lang);
   const { product, resources, project } = t.columns;
@@ -76,7 +77,10 @@ export function Footer({ lang }: { lang: Locale }) {
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
             <Column
               title={product.title}
-              links={[...product.links, { href: site.demo, label: product.demo }]}
+              links={[
+                ...product.links.map((l) => ({ ...l, href: anchor(l.href, lang) })),
+                { href: site.demo, label: product.demo },
+              ]}
             />
             <Column
               title={resources.title}
@@ -103,6 +107,12 @@ export function Footer({ lang }: { lang: Locale }) {
           <div className="flex flex-col gap-1 sm:flex-row sm:gap-4">
             <p>{t.copyright}</p>
             <p>{t.openSource}</p>
+            <a href={legalPath("imprint", lang)} className={linkClass + " inline-flex min-h-6 items-center text-xs"}>
+              {t.imprint}
+            </a>
+            <a href={legalPath("privacy", lang)} className={linkClass + " inline-flex min-h-6 items-center text-xs"}>
+              {t.privacy}
+            </a>
           </div>
           <div className="flex items-center gap-3">
             <a
@@ -114,7 +124,7 @@ export function Footer({ lang }: { lang: Locale }) {
             >
               <GitHubIcon className="size-4" />
             </a>
-            <LanguageSwitch lang={lang} label={t.languageLabel} names={nav.languages} />
+            <LanguageSwitch lang={lang} label={t.languageLabel} names={nav.languages} hrefs={alternates} />
           </div>
         </div>
       </Container>
