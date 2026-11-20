@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — dark, technical look.
+ * Use them via Tailwind utilities: bg-bg, bg-surface, border-line, text-fg, text-muted,
+ * text-accent, bg-ok / bg-warn / bg-down / bg-maint, font-mono …
+ */
+@theme inline {
+  --color-bg: #08090b;
+  --color-surface: #0f1115;
+  --color-surface-2: #161920;
+  --color-line: #23262f;
+  --color-line-strong: #343846;
+  --color-fg: #eceef3;
+  --color-muted: #9097a6;
+  --color-subtle: #646b7a;
+
+  /* Brand accent: the blue of the product logo */
+  --color-accent: #3b82f6;
+  --color-accent-strong: #2563eb;
+  --color-accent-soft: rgb(59 130 246 / 0.14);
+
+  /* Status colours, matching the product */
+  --color-ok: #22c55e;
+  --color-warn: #eab308;
+  --color-partial: #f97316;
+  --color-down: #ef4444;
+  --color-maint: #60a5fa;
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(34 197 94 / 0.55); }
+  50% { box-shadow: 0 0 0 6px rgb(34 197 94 / 0); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: rgb(59 130 246 / 0.35);
+}
+
+/* Subtle engineering grid, used behind hero and section headers */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.mask-fade-b {
+  mask-image: linear-gradient(to bottom, black 40%, transparent);
+}
+
+.mask-radial {
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+.text-gradient {
+  background: linear-gradient(180deg, #ffffff 20%, #a3a9b7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
