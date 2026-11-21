@@ -13,12 +13,13 @@ export type Supporter = {
   accent?: string;
 };
 
-// TODO: replace placeholder with official assets from https://id.pein.group/branding
+// Logos: official files from each brand, unchanged. PEIN wordmark in white for dark
+// backgrounds, per https://id.pein.group/branding.
 export const supporters: Supporter[] = [
   {
     name: "Pein GbR",
     url: "https://pein.group",
     roles: ["sponsor", "user"],
-    logo: null,
+    logo: "/sponsors/pein-wordmark-white.svg",
   },
 ];

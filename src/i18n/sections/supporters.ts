@@ -28,9 +28,9 @@ export const copy: Localized<{
   en: {
     eyebrow: "Sponsors & users",
     title: "Backed by people who run it in production",
-    lead: "OpenStatusPage is independent and open source. These organisations fund its development or rely on it for their own status pages.",
+    lead: "OpenStatusPage is independent and open source. These organisations support the project or run their own status pages with it.",
     sponsorsHeading: "Sponsors",
-    sponsorsLead: "Funding development, the public demo and a project that stays AGPL.",
+    sponsorsLead: "Organisations that support OpenStatusPage as sponsors.",
     usersHeading: "Used by",
     usersLead: "Teams that host their own status page with OpenStatusPage.",
     roles: { sponsor: "Sponsor", user: "User" },
@@ -57,9 +57,9 @@ export const copy: Localized<{
   de: {
     eyebrow: "Sponsoren & Nutzer",
     title: "Getragen von Leuten, die es selbst einsetzen",
-    lead: "OpenStatusPage ist unabhängig und quelloffen. Diese Organisationen finanzieren die Entwicklung oder betreiben damit ihre eigene Statusseite.",
+    lead: "OpenStatusPage ist unabhängig und quelloffen. Diese Organisationen unterstützen das Projekt oder betreiben damit ihre eigene Statusseite.",
     sponsorsHeading: "Sponsoren",
-    sponsorsLead: "Sie finanzieren die Entwicklung, die öffentliche Demo und ein Projekt, das AGPL bleibt.",
+    sponsorsLead: "Organisationen, die OpenStatusPage als Sponsor unterstützen.",
     usersHeading: "Im Einsatz bei",
     usersLead: "Teams, die ihre eigene Statusseite mit OpenStatusPage betreiben.",
     roles: { sponsor: "Sponsor", user: "Nutzer" },

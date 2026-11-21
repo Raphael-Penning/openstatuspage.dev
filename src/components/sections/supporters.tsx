@@ -140,7 +140,7 @@ function SupporterMark({
           fill
           sizes={size === "lg" ? "224px" : "144px"}
           unoptimized={supporter.logo.endsWith(".svg")}
-          className="object-contain object-left"
+          className={cx("object-contain", size === "lg" ? "object-left" : "object-center")}
         />
       </span>
     );
