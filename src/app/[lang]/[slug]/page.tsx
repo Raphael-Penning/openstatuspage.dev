@@ -16,7 +16,8 @@ import { Container } from "@/components/ui/primitives";
 import { Navbar } from "@/components/sections/navbar";
 import { Footer } from "@/components/sections/footer";
 import { GuideView } from "@/components/guide-view";
-import { guides } from "@/content/guides";
+import { guides, guidesUpdated, guideTags } from "@/content/guides";
+import { legalJsonLd, serializeJsonLd } from "@/lib/structured-data";
 
 export async function generateStaticParams() {
   return locales.flatMap((lang) => allSlugs(lang).map((slug) => ({ lang, slug })));
@@ -42,6 +43,12 @@ export async function generateMetadata({
       title: g.metaTitle ?? g.title,
       description: g.description,
       alternates: guideAlternates(resolved.page),
+      article: {
+        published: guidesUpdated,
+        modified: guidesUpdated,
+        section: "Guides",
+        tags: guideTags[resolved.page],
+      },
     });
   }
   const page = resolved.page;
@@ -71,9 +78,25 @@ function LegalView({ page, lang }: { page: LegalPage; lang: Locale }) {
   const ui = legalUi[lang];
   const alternates = legalAlternates(page);
   const { Body } = c;
+  const homeLabel = lang === "de" ? "Startseite" : "Home";
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(
+            legalJsonLd({
+              lang,
+              url: legalPath(page, lang),
+              title: c.title,
+              description: c.description,
+              updated: legalUpdated,
+              homeLabel,
+            }),
+          ),
+        }}
+      />
       <Navbar lang={lang} alternates={alternates} />
       <main id="main" className="relative">
         <div

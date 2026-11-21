@@ -10,6 +10,13 @@ export const guides: Record<GuidePage, Guide> = {
   uptimeKuma: uptimeKumaGuide,
 };
 
+/** og:article tags per guide (language-neutral terms). */
+export const guideTags: Record<GuidePage, string[]> = {
+  alternatives: ["status page", "Statuspage alternative", "self-hosted", "open source", "Cachet", "Upptime", "Gatus", "Uptime Kuma", "cState", "Kener"],
+  icinga: ["Icinga 2", "status page", "monitoring", "self-hosted", "open source"],
+  uptimeKuma: ["Uptime Kuma", "status page", "check bundles", "self-hosted", "open source"],
+};
+
 export const guideUi = {
   en: {
     updated: "Last updated",

@@ -12,12 +12,15 @@ export function pageMetadata({
   description,
   alternates,
   absoluteTitle = false,
+  article,
 }: {
   lang: Locale;
   title: string;
   description: string;
   alternates: Alternates;
   absoluteTitle?: boolean;
+  /** Emit og:type=article with dates, author and tags. */
+  article?: { published: string; modified: string; section: string; tags: string[] };
 }): Metadata {
   const url = alternates[lang];
   return {
@@ -28,7 +31,16 @@ export function pageMetadata({
       languages: { en: alternates.en, de: alternates.de, "x-default": alternates.en },
     },
     openGraph: {
-      type: "website",
+      ...(article
+        ? {
+            type: "article",
+            publishedTime: `${article.published}T00:00:00Z`,
+            modifiedTime: `${article.modified}T00:00:00Z`,
+            authors: [site.github.replace(/\/[^/]+$/, "")],
+            section: article.section,
+            tags: article.tags,
+          }
+        : { type: "website" }),
       url,
       siteName: site.name,
       title,
