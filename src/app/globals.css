@@ -129,3 +129,12 @@ body {
 .legal a:hover {
   text-decoration-color: var(--color-accent);
 }
+
+/* Privacy policy: numbered headings via a counter, so optional sections renumber themselves */
+.legal-numbered {
+  counter-reset: legal-section;
+}
+.legal-numbered > h2::before {
+  counter-increment: legal-section;
+  content: counter(legal-section) ". ";
+}

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import { hasLocale, locales } from "@/lib/i18n";
 import { site } from "@/lib/site";
+import { Analytics } from "@/components/analytics";
 import "../globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "swap" });
@@ -56,6 +57,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
           {skipLabel[lang]}
         </a>
         {children}
+        <Analytics />
       </body>
     </html>
   );

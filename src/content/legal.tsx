@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import type { Locale } from "@/lib/i18n";
 import { authority, hosting, provider } from "@/data/legal";
 import { site } from "@/lib/site";
+import { umami } from "@/lib/analytics";
+import { AnalyticsOptOut } from "@/components/analytics-opt-out";
 
 const Mail = () => <a href={`mailto:${provider.email}`}>{provider.email}</a>;
 
@@ -18,6 +20,96 @@ const Address = ({ lang }: { lang: Locale }) => (
 );
 
 const H2 = ({ children }: { children: ReactNode }) => <h2>{children}</h2>;
+
+/** Privacy sections are numbered by a CSS counter, so optional ones can come and go. */
+const Numbered = ({ children }: { children: ReactNode }) => (
+  <div className="legal-numbered">{children}</div>
+);
+
+const optOutLabels = {
+  de: {
+    active: "Die Reichweitenmessung ist in diesem Browser aktiv.",
+    disabled: "Die Reichweitenmessung ist in diesem Browser abgeschaltet.",
+    disable: "Messung abschalten",
+    enable: "Messung wieder erlauben",
+  },
+  en: {
+    active: "Audience measurement is active in this browser.",
+    disabled: "Audience measurement is turned off in this browser.",
+    disable: "Turn off measurement",
+    enable: "Allow measurement again",
+  },
+} as const;
+
+function UmamiDe({ host }: { host: string }) {
+  return (
+    <>
+      <H2>Reichweitenmessung mit Umami</H2>
+      <p>
+        Um zu verstehen, welche Seiten gelesen werden und woher Besucher kommen, nutze ich{" "}
+        <a href="https://umami.is">Umami</a>, eine quelloffene Software zur Reichweitenmessung.
+        Umami läuft auf meinem eigenen Server ({host}), den ich bei einem Hosting-Anbieter in der
+        EU gemietet habe. Der Anbieter verarbeitet die Daten ausschließlich in meinem Auftrag (Art.
+        28 DSGVO). Eine Weitergabe an Dritte oder in Drittländer findet nicht statt.
+      </p>
+      <p>
+        Ist JavaScript aktiv, lädt dein Browser ein kleines Skript von {host} und meldet beim
+        Seitenaufruf: aufgerufene Seite, Referrer, Browser, Betriebssystem, Gerätetyp,
+        Bildschirmgröße und Sprache. Aus der IP-Adresse wird das Land abgeleitet; die IP-Adresse
+        selbst wird nicht gespeichert. Damit Besuche gezählt werden können, ohne dich
+        wiederzuerkennen, bildet Umami aus IP-Adresse, Browserkennung und einem regelmäßig
+        wechselnden Zufallswert einen Hashwert. Umami setzt keine Cookies, erstellt keine Profile
+        und verfolgt dich nicht über andere Websites hinweg.
+      </p>
+      <p>
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; mein berechtigtes Interesse liegt darin,
+        die Website anhand anonymer Nutzungsstatistiken zu verbessern. Die gespeicherten Daten
+        lassen sich keiner Person zuordnen. Sie werden ohne feste Frist aufbewahrt, bis ich sie
+        lösche.
+      </p>
+      <p>
+        Widerspruch: Ist in deinem Browser „Do Not Track“ aktiviert oder JavaScript abgeschaltet,
+        wird nichts erfasst. Außerdem kannst du die Messung hier für diesen Browser abschalten.
+        Dafür wird auf deinen Wunsch nur der Eintrag „umami.disabled“ im Local Storage gespeichert.
+      </p>
+      <AnalyticsOptOut labels={optOutLabels.de} />
+    </>
+  );
+}
+
+function UmamiEn({ host }: { host: string }) {
+  return (
+    <>
+      <H2>Audience measurement with Umami</H2>
+      <p>
+        To understand which pages are read and where visitors come from, I use{" "}
+        <a href="https://umami.is">Umami</a>, open-source web analytics software. Umami runs on my
+        own server ({host}), rented from a hosting provider in the EU that processes the data
+        solely on my behalf (Art. 28 GDPR). No data is passed on to third parties or transferred
+        to third countries.
+      </p>
+      <p>
+        If JavaScript is enabled, your browser loads a small script from {host} and reports on
+        each page view: the page visited, referrer, browser, operating system, device type, screen
+        size and language. Your country is derived from the IP address; the IP address itself is
+        not stored. To count visits without recognising you, Umami creates a hash from the IP
+        address, the browser identifier and a regularly changing random value. Umami sets no
+        cookies, builds no profiles and does not track you across other websites.
+      </p>
+      <p>
+        The legal basis is Art. 6 (1) (f) GDPR; my legitimate interest is improving the website
+        based on anonymous usage statistics. The stored data cannot be linked to a person. It is
+        kept without a fixed retention period until I delete it.
+      </p>
+      <p>
+        Objection: if your browser sends “Do Not Track” or JavaScript is disabled, nothing is
+        recorded. You can also turn off measurement for this browser here. At your request, this
+        only stores the entry “umami.disabled” in local storage.
+      </p>
+      <AnalyticsOptOut labels={optOutLabels.en} />
+    </>
+  );
+}
 
 /* ------------------------------------------------------------------------- */
 /* Impressum / Legal notice                                                   */
@@ -116,8 +208,8 @@ function ImprintEn() {
 
 function PrivacyDe() {
   return (
-    <>
-      <H2>1. Verantwortlicher</H2>
+    <Numbered>
+      <H2>Verantwortlicher</H2>
       <p>Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der DSGVO ist:</p>
       <Address lang="de" />
       <p>
@@ -128,15 +220,25 @@ function PrivacyDe() {
         besteht.
       </p>
 
-      <H2>2. Das Wichtigste in Kürze</H2>
+      <H2>Das Wichtigste in Kürze</H2>
       <ul>
-        <li>Keine Cookies, kein Tracking, keine Analyse- oder Werbedienste.</li>
-        <li>Keine eingebundenen Inhalte Dritter: Schriften, Bilder und Skripte kommen vom eigenen Server.</li>
+        {umami ? (
+          <>
+            <li>Keine Cookies, keine Werbung, kein Tracking über andere Websites hinweg.</li>
+            <li>Anonyme Reichweitenmessung mit selbst gehostetem Umami, jederzeit abschaltbar.</li>
+            <li>Keine eingebundenen Inhalte Dritter: Schriften, Bilder und Skripte kommen von eigenen Servern.</li>
+          </>
+        ) : (
+          <>
+            <li>Keine Cookies, kein Tracking, keine Analyse- oder Werbedienste.</li>
+            <li>Keine eingebundenen Inhalte Dritter: Schriften, Bilder und Skripte kommen vom eigenen Server.</li>
+          </>
+        )}
         <li>Server-Logs werden ohne vollständige IP-Adresse geschrieben.</li>
         <li>Die Website funktioniert vollständig ohne JavaScript.</li>
       </ul>
 
-      <H2>3. Hosting</H2>
+      <H2>Hosting</H2>
       <p>
         Diese Website wird auf Servern der {hosting.name} (<a href={hosting.url}>{hosting.url.replace("https://", "")}</a>)
         in Deutschland betrieben. Die {hosting.name} verarbeitet die beim Aufruf anfallenden Daten
@@ -144,7 +246,7 @@ function PrivacyDe() {
         Übermittlung in Drittländer findet nicht statt.
       </p>
 
-      <H2>4. Aufruf der Website und Server-Logfiles</H2>
+      <H2>Aufruf der Website und Server-Logfiles</H2>
       <p>
         Beim Aufruf der Website übermittelt dein Browser technisch notwendige Informationen an den
         Server. Damit die Website ausgeliefert werden kann, verarbeitet der Server kurzzeitig
@@ -166,26 +268,36 @@ function PrivacyDe() {
         deine Person nicht möglich.
       </p>
 
-      <H2>5. Verschlüsselung</H2>
+      <H2>Verschlüsselung</H2>
       <p>
         Die Website wird ausschließlich über HTTPS (TLS) ausgeliefert. So können übertragene Daten
         nicht von Dritten mitgelesen werden.
       </p>
 
-      <H2>6. Cookies und lokale Speicherung</H2>
-      <p>
-        Diese Website setzt keine Cookies und speichert nichts im Speicher deines Browsers
-        (Local Storage o. ä.). Eine Einwilligung nach § 25 TDDDG ist daher nicht erforderlich.
-      </p>
+      <H2>Cookies und lokale Speicherung</H2>
+      {umami ? (
+        <p>
+          Diese Website setzt keine Cookies. Etwas im Speicher deines Browsers (Local Storage)
+          abgelegt wird nur, wenn du die Reichweitenmessung ausdrücklich abschaltest (siehe
+          Reichweitenmessung mit Umami).
+        </p>
+      ) : (
+        <p>
+          Diese Website setzt keine Cookies und speichert nichts im Speicher deines Browsers
+          (Local Storage o. ä.). Eine Einwilligung nach § 25 TDDDG ist daher nicht erforderlich.
+        </p>
+      )}
 
-      <H2>7. Schriften</H2>
+      {umami && <UmamiDe host={umami.host} />}
+
+      <H2>Schriften</H2>
       <p>
         Die verwendeten Schriften (Geist und Geist Mono) werden beim Erstellen der Website
         heruntergeladen und vom eigenen Server ausgeliefert. Beim Besuch der Website besteht keine
         Verbindung zu Google oder anderen Schriftanbietern.
       </p>
 
-      <H2>8. Kontakt per E-Mail</H2>
+      <H2>Kontakt per E-Mail</H2>
       <p>
         Wenn du mir eine E-Mail schreibst, verarbeite ich deine E-Mail-Adresse, deinen Namen und
         den Inhalt deiner Nachricht, um dein Anliegen zu bearbeiten – etwa Anfragen zu
@@ -196,7 +308,7 @@ function PrivacyDe() {
         Aufbewahrungspflichten entgegenstehen.
       </p>
 
-      <H2>9. Externe Links</H2>
+      <H2>Externe Links</H2>
       <p>
         Die Website verlinkt unter anderem auf GitHub, auf die Live-Demo ({site.demo.replace("https://", "")})
         und auf {hosting.url.replace("https://", "")}. Erst wenn du einen solchen Link anklickst,
@@ -204,7 +316,7 @@ function PrivacyDe() {
         Datenschutzerklärung.
       </p>
 
-      <H2>10. Deine Rechte</H2>
+      <H2>Deine Rechte</H2>
       <p>Du hast gegenüber mir jederzeit das Recht auf</p>
       <ul>
         <li>Auskunft über die zu dir gespeicherten Daten (Art. 15 DSGVO),</li>
@@ -223,19 +335,19 @@ function PrivacyDe() {
         {authority.de}, {authority.address} (<a href={authority.url}>{authority.url.replace("https://", "")}</a>).
       </p>
 
-      <H2>11. Änderungen</H2>
+      <H2>Änderungen</H2>
       <p>
         Ich passe diese Datenschutzerklärung an, wenn sich die Website oder die Rechtslage ändert.
         Es gilt die jeweils hier veröffentlichte Fassung.
       </p>
-    </>
+    </Numbered>
   );
 }
 
 function PrivacyEn() {
   return (
-    <>
-      <H2>1. Controller</H2>
+    <Numbered>
+      <H2>Controller</H2>
       <p>The controller responsible for data processing on this website within the meaning of the GDPR is:</p>
       <Address lang="en" />
       <p>
@@ -243,15 +355,25 @@ function PrivacyEn() {
       </p>
       <p>No data protection officer has been appointed, as there is no legal obligation to do so.</p>
 
-      <H2>2. In short</H2>
+      <H2>In short</H2>
       <ul>
-        <li>No cookies, no tracking, no analytics or advertising services.</li>
-        <li>No embedded third-party content: fonts, images and scripts are served from our own server.</li>
+        {umami ? (
+          <>
+            <li>No cookies, no advertising, no tracking across other websites.</li>
+            <li>Anonymous audience measurement with self-hosted Umami, which you can turn off at any time.</li>
+            <li>No embedded third-party content: fonts, images and scripts are served from our own servers.</li>
+          </>
+        ) : (
+          <>
+            <li>No cookies, no tracking, no analytics or advertising services.</li>
+            <li>No embedded third-party content: fonts, images and scripts are served from our own server.</li>
+          </>
+        )}
         <li>Server logs are written without full IP addresses.</li>
         <li>The website works fully without JavaScript.</li>
       </ul>
 
-      <H2>3. Hosting</H2>
+      <H2>Hosting</H2>
       <p>
         This website runs on servers operated by {hosting.name} (<a href={hosting.url}>{hosting.url.replace("https://", "")}</a>)
         in Germany. {hosting.name} processes the data that arises when the site is accessed solely
@@ -259,7 +381,7 @@ function PrivacyEn() {
         third countries.
       </p>
 
-      <H2>4. Visiting the website and server log files</H2>
+      <H2>Visiting the website and server log files</H2>
       <p>
         When you visit the website, your browser sends technically necessary information to the
         server. To deliver the website, the server briefly processes your IP address. In the
@@ -280,23 +402,32 @@ function PrivacyEn() {
         addresses, they cannot be traced back to you.
       </p>
 
-      <H2>5. Encryption</H2>
+      <H2>Encryption</H2>
       <p>The website is served exclusively over HTTPS (TLS), so transmitted data cannot be read by third parties.</p>
 
-      <H2>6. Cookies and local storage</H2>
-      <p>
-        This website sets no cookies and stores nothing in your browser (local storage or
-        similar). Consent under § 25 TDDDG is therefore not required.
-      </p>
+      <H2>Cookies and local storage</H2>
+      {umami ? (
+        <p>
+          This website sets no cookies. Something is stored in your browser (local storage) only
+          if you explicitly turn off audience measurement (see Audience measurement with Umami).
+        </p>
+      ) : (
+        <p>
+          This website sets no cookies and stores nothing in your browser (local storage or
+          similar). Consent under § 25 TDDDG is therefore not required.
+        </p>
+      )}
 
-      <H2>7. Fonts</H2>
+      {umami && <UmamiEn host={umami.host} />}
+
+      <H2>Fonts</H2>
       <p>
         The fonts used (Geist and Geist Mono) are downloaded when the website is built and served
         from our own server. Visiting the website creates no connection to Google or other font
         providers.
       </p>
 
-      <H2>8. Contact by email</H2>
+      <H2>Contact by email</H2>
       <p>
         If you send me an email, I process your email address, your name and the content of your
         message to handle your request, for example about sponsoring, being listed as a user or
@@ -306,7 +437,7 @@ function PrivacyEn() {
         obligations apply.
       </p>
 
-      <H2>9. External links</H2>
+      <H2>External links</H2>
       <p>
         The website links to GitHub, the live demo ({site.demo.replace("https://", "")}) and{" "}
         {hosting.url.replace("https://", "")}, among others. Your browser only connects to the
@@ -314,7 +445,7 @@ function PrivacyEn() {
         policy applies.
       </p>
 
-      <H2>10. Your rights</H2>
+      <H2>Your rights</H2>
       <p>You have the right at any time to</p>
       <ul>
         <li>access the data stored about you (Art. 15 GDPR),</li>
@@ -330,12 +461,12 @@ function PrivacyEn() {
         {authority.en}, {authority.address} (<a href={authority.url}>{authority.url.replace("https://", "")}</a>).
       </p>
 
-      <H2>11. Changes</H2>
+      <H2>Changes</H2>
       <p>
         I update this privacy policy when the website or the legal situation changes. The version
         published here applies.
       </p>
-    </>
+    </Numbered>
   );
 }
 
@@ -345,8 +476,8 @@ export const legalContent = {
     en: { title: "Legal notice", description: "Provider identification and contact for openstatuspage.dev.", Body: ImprintEn },
   },
   privacy: {
-    de: { title: "Datenschutzerklärung", description: "Wie openstatuspage.dev mit personenbezogenen Daten umgeht: keine Cookies, kein Tracking.", Body: PrivacyDe },
-    en: { title: "Privacy policy", description: "How openstatuspage.dev handles personal data: no cookies, no tracking.", Body: PrivacyEn },
+    de: { title: "Datenschutzerklärung", description: umami ? "Wie openstatuspage.dev mit personenbezogenen Daten umgeht: keine Cookies, anonyme Reichweitenmessung." : "Wie openstatuspage.dev mit personenbezogenen Daten umgeht: keine Cookies, kein Tracking.", Body: PrivacyDe },
+    en: { title: "Privacy policy", description: umami ? "How openstatuspage.dev handles personal data: no cookies, anonymous audience measurement." : "How openstatuspage.dev handles personal data: no cookies, no tracking.", Body: PrivacyEn },
   },
 } as const;
 

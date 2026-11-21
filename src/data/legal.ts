@@ -23,4 +23,4 @@ export const authority = {
 } as const;
 
 /** Date shown as "last updated" on both legal pages. */
-export const legalUpdated = "2026-11-20";
+export const legalUpdated = "2026-11-21";
