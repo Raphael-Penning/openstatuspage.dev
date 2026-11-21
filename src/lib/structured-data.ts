@@ -91,3 +91,78 @@ export function homeJsonLd(lang: Locale) {
 
 /** Serialize for a <script type="application/ld+json">, escaping `<` against injection. */
 export const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, "\\u003c");
+
+const author = () => ({
+  "@type": "Person",
+  "@id": `${site.url}/#author`,
+  name: provider.name,
+  url: site.github.replace(/\/openstatuspage$/, ""),
+});
+
+/** schema.org graph for a guide: TechArticle, BreadcrumbList and its FAQPage. */
+export function guideJsonLd({
+  lang,
+  url,
+  title,
+  description,
+  updated,
+  homeLabel,
+  faq,
+}: {
+  lang: Locale;
+  url: string;
+  title: string;
+  description: string;
+  updated: string;
+  homeLabel: string;
+  faq: { q: string; a: string }[];
+}) {
+  const abs = absolute(url);
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": `${abs}#article`,
+        headline: title,
+        description,
+        inLanguage: lang,
+        url: abs,
+        mainEntityOfPage: abs,
+        datePublished: updated,
+        dateModified: updated,
+        author: author(),
+        publisher: author(),
+        isPartOf: { "@type": "WebSite", "@id": `${site.url}/#website`, name: site.name, url: site.url },
+        about: {
+          "@type": "SoftwareApplication",
+          "@id": `${site.url}/#software`,
+          name: site.name,
+          applicationCategory: "DeveloperApplication",
+          operatingSystem: "Linux (Docker, Kubernetes)",
+          url: site.url,
+          sameAs: [site.github],
+        },
+        image: absolute(`/screenshots/overview-dark-${lang}.png`),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${abs}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: homeLabel, item: absolute(`/${lang}`) },
+          { "@type": "ListItem", position: 2, name: title, item: abs },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${abs}#faq`,
+        inLanguage: lang,
+        mainEntity: faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      },
+    ],
+  };
+}

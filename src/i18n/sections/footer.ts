@@ -13,6 +13,7 @@ type FooterCopy = {
       contributing: string;
     };
     project: { title: string; github: string; license: string; sponsor: string };
+    guides: { title: string; alternatives: string; icinga: string; uptimeKuma: string };
   };
   builtWith: string;
   builtWithCta: string;
@@ -53,6 +54,12 @@ export const copy: Localized<FooterCopy> = {
         license: "License (AGPL-3.0)",
         sponsor: "Become a sponsor",
       },
+      guides: {
+        title: "Guides",
+        alternatives: "Statuspage alternatives",
+        icinga: "Icinga 2 status page",
+        uptimeKuma: "Uptime Kuma status page",
+      },
     },
     builtWith: "Built something with OpenStatusPage?",
     builtWithCta: "Tell us",
@@ -90,6 +97,12 @@ export const copy: Localized<FooterCopy> = {
         github: "GitHub",
         license: "Lizenz (AGPL-3.0)",
         sponsor: "Sponsor werden",
+      },
+      guides: {
+        title: "Guides",
+        alternatives: "Statuspage-Alternativen",
+        icinga: "Icinga-2-Statusseite",
+        uptimeKuma: "Uptime-Kuma-Statusseite",
       },
     },
     builtWith: "Du setzt OpenStatusPage ein?",

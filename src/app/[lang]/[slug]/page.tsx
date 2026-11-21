@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, locales, type Locale } from "@/lib/i18n";
 import {
+  allSlugs,
+  guideAlternates,
   legalAlternates,
-  legalPageFromSlug,
-  legalPages,
   legalPath,
+  pageFromSlug,
   type LegalPage,
 } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
@@ -14,28 +15,36 @@ import { legalUpdated } from "@/data/legal";
 import { Container } from "@/components/ui/primitives";
 import { Navbar } from "@/components/sections/navbar";
 import { Footer } from "@/components/sections/footer";
+import { GuideView } from "@/components/guide-view";
+import { guides } from "@/content/guides";
 
 export async function generateStaticParams() {
-  return locales.flatMap((lang) =>
-    (Object.keys(legalPages) as LegalPage[]).map((page) => ({
-      lang,
-      slug: legalPages[page][lang],
-    })),
-  );
+  return locales.flatMap((lang) => allSlugs(lang).map((slug) => ({ lang, slug })));
 }
 
 async function resolve(params: PageProps<"/[lang]/[slug]">["params"]) {
   const { lang, slug } = await params;
   if (!hasLocale(lang)) notFound();
-  const page = legalPageFromSlug(slug, lang);
-  if (!page) notFound();
-  return { lang, page };
+  const resolved = pageFromSlug(slug, lang);
+  if (!resolved) notFound();
+  return { lang, ...resolved };
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/[lang]/[slug]">): Promise<Metadata> {
-  const { lang, page } = await resolve(params);
+  const resolved = await resolve(params);
+  const { lang } = resolved;
+  if (resolved.kind === "guide") {
+    const g = guides[resolved.page][lang];
+    return pageMetadata({
+      lang,
+      title: g.metaTitle ?? g.title,
+      description: g.description,
+      alternates: guideAlternates(resolved.page),
+    });
+  }
+  const page = resolved.page;
   const c = legalContent[page][lang];
   return pageMetadata({
     lang,
@@ -51,8 +60,13 @@ const formatDate = (iso: string, lang: Locale) =>
     timeZone: "UTC",
   }).format(new Date(`${iso}T00:00:00Z`));
 
-export default async function LegalPageRoute({ params }: PageProps<"/[lang]/[slug]">) {
-  const { lang, page } = await resolve(params);
+export default async function SlugPage({ params }: PageProps<"/[lang]/[slug]">) {
+  const resolved = await resolve(params);
+  if (resolved.kind === "guide") return <GuideView page={resolved.page} lang={resolved.lang} />;
+  return <LegalView page={resolved.page} lang={resolved.lang} />;
+}
+
+function LegalView({ page, lang }: { page: LegalPage; lang: Locale }) {
   const c = legalContent[page][lang];
   const ui = legalUi[lang];
   const alternates = legalAlternates(page);

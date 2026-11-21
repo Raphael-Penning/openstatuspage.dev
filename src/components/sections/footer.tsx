@@ -1,6 +1,6 @@
 import { pick, type Locale } from "@/lib/i18n";
 import { site } from "@/lib/site";
-import { anchor, legalPath, type Alternates } from "@/lib/routes";
+import { anchor, guidePath, legalPath, type Alternates } from "@/lib/routes";
 import { Container } from "@/components/ui/primitives";
 import { copy } from "@/i18n/sections/footer";
 import { copy as navCopy } from "@/i18n/sections/navbar";
@@ -42,7 +42,7 @@ function Column({ title, links }: { title: string; links: FooterLink[] }) {
 export function Footer({ lang, alternates }: { lang: Locale; alternates?: Alternates }) {
   const t = pick(copy, lang);
   const nav = pick(navCopy, lang);
-  const { product, resources, project } = t.columns;
+  const { product, resources, project, guides } = t.columns;
 
   return (
     <footer className="relative border-t border-line bg-bg">
@@ -51,7 +51,7 @@ export function Footer({ lang, alternates }: { lang: Locale; alternates?: Altern
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
       />
       <Container className="py-14 sm:py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_2fr]">
+        <div className="grid gap-12 lg:grid-cols-[1fr_2.4fr]">
           <div className="max-w-sm">
             <a
               href={`/${lang}`}
@@ -74,12 +74,20 @@ export function Footer({ lang, alternates }: { lang: Locale; alternates?: Altern
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
             <Column
               title={product.title}
               links={[
                 ...product.links.map((l) => ({ ...l, href: anchor(l.href, lang) })),
                 { href: site.demo, label: product.demo },
+              ]}
+            />
+            <Column
+              title={guides.title}
+              links={[
+                { href: guidePath("alternatives", lang), label: guides.alternatives },
+                { href: guidePath("icinga", lang), label: guides.icinga },
+                { href: guidePath("uptimeKuma", lang), label: guides.uptimeKuma },
               ]}
             />
             <Column

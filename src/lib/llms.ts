@@ -1,4 +1,4 @@
-import { absolute, legalPath } from "./routes";
+import { absolute, guidePath, legalPath } from "./routes";
 import { site } from "./site";
 import { copy as faq } from "@/i18n/sections/faq";
 import { copy as features } from "@/i18n/sections/features";
@@ -28,6 +28,12 @@ This site (${site.domain}) is the project's landing page, available in English a
 - [Landing page (English)](${absolute("/en")}): overview, product tour, features, quickstart, FAQ
 - [Landing page (German)](${absolute("/de")}): the same in German
 - [Full text for LLMs](${absolute("/llms-full.txt")}): features, installation and FAQ as plain Markdown
+
+## Guides
+
+- [Open-source alternatives to Atlassian Statuspage](${absolute(guidePath("alternatives", "en"))}): neutral comparison of OpenStatusPage, Cachet, Upptime, Gatus, Uptime Kuma, cState and Kener
+- [A public status page for Icinga 2](${absolute(guidePath("icinga", "en"))}): REST API pull or notification push, hard states only, no host names for visitors
+- [A customer-facing status page for Uptime Kuma](${absolute(guidePath("uptimeKuma", "en"))}): services instead of monitors, check bundles across several Kuma nodes, email subscriptions
 
 ## Docs
 

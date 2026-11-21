@@ -1,14 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { legalPages } from "@/lib/routes";
+import { allSlugs } from "@/lib/routes";
 
 const locales = ["en", "de"] as const;
 
-/** Every page that exists, per locale: home plus the localized legal slugs. */
+/** Every page that exists, per locale: home plus the localized legal and guide slugs. */
 const knownPaths = new Set(
-  locales.flatMap((l) => [
-    `/${l}`,
-    ...Object.values(legalPages).map((slugs) => `/${l}/${slugs[l]}`),
-  ]),
+  locales.flatMap((l) => [`/${l}`, ...allSlugs(l).map((slug) => `/${l}/${slug}`)]),
 );
 
 function preferredLocale(request: NextRequest) {

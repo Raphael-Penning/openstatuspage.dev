@@ -31,7 +31,7 @@ export function pagesSitemapXml() {
         ),
         `    <xhtml:link rel="alternate" hreflang="x-default" href="${escape(absolute(alternates.en))}"/>`,
       ].join("\n");
-      return `  <url>\n    <loc>${escape(absolute(alternates[lang]))}</loc>\n    <lastmod>${site.updated}</lastmod>\n    <changefreq>${priority === 1 ? "weekly" : "yearly"}</changefreq>\n    <priority>${priority.toFixed(1)}</priority>\n${links}\n  </url>`;
+      return `  <url>\n    <loc>${escape(absolute(alternates[lang]))}</loc>\n    <lastmod>${site.updated}</lastmod>\n    <changefreq>${priority === 1 ? "weekly" : priority >= 0.5 ? "monthly" : "yearly"}</changefreq>\n    <priority>${priority.toFixed(1)}</priority>\n${links}\n  </url>`;
     }),
   );
   return `${xmlHeader}\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join("\n")}\n</urlset>\n`;
