@@ -1,27 +1,30 @@
 import { site } from "./site";
 
 /**
- * Umami web analytics (https://umami.is), read from the environment at build time.
+ * Umami web analytics (https://umami.is) for openstatuspage.dev.
  *
- * Analytics stay off unless both variables are set, so forks, local builds and
- * previews never report to someone else's Umami instance:
+ * Tracking is always on with the defaults below. The tracker only counts page views
+ * on the hostnames in `domains`, so forks, local builds and previews running on other
+ * hosts send nothing. Forks can point it at their own instance via the environment
+ * (read at build time):
  *
- *   UMAMI_URL=https://analytics.example.com   # base URL of your Umami instance
+ *   UMAMI_URL=https://analytics.example.com   # base URL of the Umami instance
  *   UMAMI_WEBSITE_ID=xxxxxxxx-xxxx-...        # website ID from the Umami dashboard
- *   UMAMI_DOMAINS=example.com                 # optional, defaults to the site domain
- *
- * The privacy policy only mentions Umami when it is configured.
+ *   UMAMI_DOMAINS=example.com                 # comma-separated hostnames to count
  */
-function readUmami() {
-  const url = process.env.UMAMI_URL?.trim().replace(/\/+$/, "");
-  const websiteId = process.env.UMAMI_WEBSITE_ID?.trim();
-  if (!url || !websiteId) return null;
-  return {
-    src: `${url}/script.js`,
-    websiteId,
-    host: new URL(url).host,
-    domains: process.env.UMAMI_DOMAINS?.trim() || site.domain,
-  };
-}
+const defaults = {
+  url: "https://analytics.partlabs.de",
+  websiteId: "585291a3-7a54-48be-bc22-650898b8752d",
+  domains: site.domain,
+};
 
-export const umami = readUmami();
+const env = (name: string) => process.env[name]?.trim() || undefined;
+
+const url = (env("UMAMI_URL") ?? defaults.url).replace(/\/+$/, "");
+
+export const umami = {
+  src: `${url}/script.js`,
+  websiteId: env("UMAMI_WEBSITE_ID") ?? defaults.websiteId,
+  host: new URL(url).host,
+  domains: env("UMAMI_DOMAINS") ?? defaults.domains,
+};

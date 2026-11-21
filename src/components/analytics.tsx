@@ -3,10 +3,9 @@ import { umami } from "@/lib/analytics";
 
 /**
  * Cookieless Umami tracker, loaded during browser idle time so it never competes
- * with page rendering. Renders nothing when Umami is not configured.
+ * with page rendering.
  */
 export function Analytics() {
-  if (!umami) return null;
   return (
     <Script
       src={umami.src}

@@ -222,18 +222,9 @@ function PrivacyDe() {
 
       <H2>Das Wichtigste in Kürze</H2>
       <ul>
-        {umami ? (
-          <>
-            <li>Keine Cookies, keine Werbung, kein Tracking über andere Websites hinweg.</li>
-            <li>Anonyme Reichweitenmessung mit selbst gehostetem Umami, jederzeit abschaltbar.</li>
-            <li>Keine eingebundenen Inhalte Dritter: Schriften, Bilder und Skripte kommen von eigenen Servern.</li>
-          </>
-        ) : (
-          <>
-            <li>Keine Cookies, kein Tracking, keine Analyse- oder Werbedienste.</li>
-            <li>Keine eingebundenen Inhalte Dritter: Schriften, Bilder und Skripte kommen vom eigenen Server.</li>
-          </>
-        )}
+        <li>Keine Cookies, keine Werbung, kein Tracking über andere Websites hinweg.</li>
+        <li>Anonyme Reichweitenmessung mit selbst gehostetem Umami, jederzeit abschaltbar.</li>
+        <li>Keine eingebundenen Inhalte Dritter: Schriften, Bilder und Skripte kommen von eigenen Servern.</li>
         <li>Server-Logs werden ohne vollständige IP-Adresse geschrieben.</li>
         <li>Die Website funktioniert vollständig ohne JavaScript.</li>
       </ul>
@@ -275,20 +266,13 @@ function PrivacyDe() {
       </p>
 
       <H2>Cookies und lokale Speicherung</H2>
-      {umami ? (
-        <p>
-          Diese Website setzt keine Cookies. Etwas im Speicher deines Browsers (Local Storage)
-          abgelegt wird nur, wenn du die Reichweitenmessung ausdrücklich abschaltest (siehe
-          Reichweitenmessung mit Umami).
-        </p>
-      ) : (
-        <p>
-          Diese Website setzt keine Cookies und speichert nichts im Speicher deines Browsers
-          (Local Storage o. ä.). Eine Einwilligung nach § 25 TDDDG ist daher nicht erforderlich.
-        </p>
-      )}
+      <p>
+        Diese Website setzt keine Cookies. Etwas im Speicher deines Browsers (Local Storage)
+        abgelegt wird nur, wenn du die Reichweitenmessung ausdrücklich abschaltest (siehe
+        Reichweitenmessung mit Umami).
+      </p>
 
-      {umami && <UmamiDe host={umami.host} />}
+      <UmamiDe host={umami.host} />
 
       <H2>Schriften</H2>
       <p>
@@ -357,18 +341,9 @@ function PrivacyEn() {
 
       <H2>In short</H2>
       <ul>
-        {umami ? (
-          <>
-            <li>No cookies, no advertising, no tracking across other websites.</li>
-            <li>Anonymous audience measurement with self-hosted Umami, which you can turn off at any time.</li>
-            <li>No embedded third-party content: fonts, images and scripts are served from our own servers.</li>
-          </>
-        ) : (
-          <>
-            <li>No cookies, no tracking, no analytics or advertising services.</li>
-            <li>No embedded third-party content: fonts, images and scripts are served from our own server.</li>
-          </>
-        )}
+        <li>No cookies, no advertising, no tracking across other websites.</li>
+        <li>Anonymous audience measurement with self-hosted Umami, which you can turn off at any time.</li>
+        <li>No embedded third-party content: fonts, images and scripts are served from our own servers.</li>
         <li>Server logs are written without full IP addresses.</li>
         <li>The website works fully without JavaScript.</li>
       </ul>
@@ -406,19 +381,12 @@ function PrivacyEn() {
       <p>The website is served exclusively over HTTPS (TLS), so transmitted data cannot be read by third parties.</p>
 
       <H2>Cookies and local storage</H2>
-      {umami ? (
-        <p>
-          This website sets no cookies. Something is stored in your browser (local storage) only
-          if you explicitly turn off audience measurement (see Audience measurement with Umami).
-        </p>
-      ) : (
-        <p>
-          This website sets no cookies and stores nothing in your browser (local storage or
-          similar). Consent under § 25 TDDDG is therefore not required.
-        </p>
-      )}
+      <p>
+        This website sets no cookies. Something is stored in your browser (local storage) only
+        if you explicitly turn off audience measurement (see Audience measurement with Umami).
+      </p>
 
-      {umami && <UmamiEn host={umami.host} />}
+      <UmamiEn host={umami.host} />
 
       <H2>Fonts</H2>
       <p>
@@ -476,8 +444,8 @@ export const legalContent = {
     en: { title: "Legal notice", description: "Provider identification and contact for openstatuspage.dev.", Body: ImprintEn },
   },
   privacy: {
-    de: { title: "Datenschutzerklärung", description: umami ? "Wie openstatuspage.dev mit personenbezogenen Daten umgeht: keine Cookies, anonyme Reichweitenmessung." : "Wie openstatuspage.dev mit personenbezogenen Daten umgeht: keine Cookies, kein Tracking.", Body: PrivacyDe },
-    en: { title: "Privacy policy", description: umami ? "How openstatuspage.dev handles personal data: no cookies, anonymous audience measurement." : "How openstatuspage.dev handles personal data: no cookies, no tracking.", Body: PrivacyEn },
+    de: { title: "Datenschutzerklärung", description: "Wie openstatuspage.dev mit personenbezogenen Daten umgeht: keine Cookies, anonyme Reichweitenmessung.", Body: PrivacyDe },
+    en: { title: "Privacy policy", description: "How openstatuspage.dev handles personal data: no cookies, anonymous audience measurement.", Body: PrivacyEn },
   },
 } as const;
 
