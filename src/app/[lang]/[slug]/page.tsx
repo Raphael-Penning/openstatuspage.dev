@@ -17,7 +17,8 @@ import { Navbar } from "@/components/sections/navbar";
 import { Footer } from "@/components/sections/footer";
 import { GuideView } from "@/components/guide-view";
 import { guides, guidesUpdated, guideTags } from "@/content/guides";
-import { legalJsonLd, serializeJsonLd } from "@/lib/structured-data";
+import { legalJsonLd } from "@/lib/structured-data";
+import { JsonLd } from "@/components/json-ld";
 
 export async function generateStaticParams() {
   return locales.flatMap((lang) => allSlugs(lang).map((slug) => ({ lang, slug })));
@@ -82,20 +83,15 @@ function LegalView({ page, lang }: { page: LegalPage; lang: Locale }) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: serializeJsonLd(
-            legalJsonLd({
+      <JsonLd
+        nodes={legalJsonLd({
               lang,
               url: legalPath(page, lang),
               title: c.title,
               description: c.description,
               updated: legalUpdated,
               homeLabel,
-            }),
-          ),
-        }}
+            })}
       />
       <Navbar lang={lang} alternates={alternates} />
       <main id="main" className="relative">

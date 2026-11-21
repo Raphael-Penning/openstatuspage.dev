@@ -15,6 +15,7 @@ const ids = {
   person: `${site.url}/#author`,
   software: `${site.url}/#software`,
   source: `${site.url}/#source`,
+  logo: `${site.url}/#logo`,
   sponsor: (name: string) =>
     `${site.url}/#sponsor-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-$/, "")}`,
 };
@@ -46,19 +47,31 @@ const organizationNode = () => ({
   "@id": ids.organization,
   name: site.name,
   url: site.url,
-  logo: {
-    "@type": "ImageObject",
-    "@id": `${site.url}/#logo`,
-    url: absolute("/logo.png"),
-    contentUrl: absolute("/logo.png"),
-    width: 512,
-    height: 512,
-    caption: site.name,
-  },
-  image: { "@id": `${site.url}/#logo` },
+  logo: { "@id": ids.logo },
+  image: { "@id": ids.logo },
   founder: { "@id": ids.person },
   sameAs: [site.github],
   ...(sponsorRefs.length ? { sponsor: sponsorRefs } : {}),
+});
+
+const logoNode = () => ({
+  "@type": "ImageObject",
+  "@id": ids.logo,
+  url: absolute("/logo.png"),
+  contentUrl: absolute("/logo.png"),
+  width: 512,
+  height: 512,
+  caption: site.name,
+});
+
+/** Social card of a page, referenced as its primary image. */
+const pageImageNode = (url: string, path: string) => ({
+  "@type": "ImageObject",
+  "@id": `${url}#primaryimage`,
+  url: ogImage(path),
+  contentUrl: ogImage(path),
+  width: 1200,
+  height: 630,
 });
 
 /** Sponsors (and users) from src/data/supporters.ts. */
@@ -138,6 +151,7 @@ const websiteNode = () => ({
 const entities = (lang: Locale) => [
   websiteNode(),
   organizationNode(),
+  logoNode(),
   personNode(),
   ...supporterNodes(),
   softwareNode(lang),
@@ -173,9 +187,7 @@ const ogImage = (path: string) => absolute(`${path}/opengraph-image`);
 export function homeJsonLd(lang: Locale) {
   const path = `/${lang}`;
   const url = absolute(path);
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
+  return [
       ...entities(lang),
       {
         "@type": "WebPage",
@@ -188,8 +200,8 @@ export function homeJsonLd(lang: Locale) {
         about: { "@id": ids.software },
         author: { "@id": ids.person },
         publisher: { "@id": ids.organization },
-        primaryImageOfPage: { "@type": "ImageObject", url: ogImage(path), width: 1200, height: 630 },
-        image: [ogImage(path), absolute(`/screenshots/overview-dark-${lang}.png`)],
+        primaryImageOfPage: { "@id": `${url}#primaryimage` },
+        image: [{ "@id": `${url}#primaryimage` }, absolute(`/screenshots/overview-dark-${lang}.png`)],
         dateModified: site.updated,
         ...(supporters.length
           ? {
@@ -197,6 +209,7 @@ export function homeJsonLd(lang: Locale) {
             }
           : {}),
       },
+      pageImageNode(url, path),
       ...(supporters.length
         ? [
             {
@@ -214,8 +227,7 @@ export function homeJsonLd(lang: Locale) {
           ]
         : []),
       faqPage(url, lang, faqCopy[lang].items),
-    ],
-  };
+  ];
 }
 
 /** Guide: entities, TechArticle, BreadcrumbList and its FAQPage. */
@@ -237,9 +249,7 @@ export function guideJsonLd({
   faq: { q: string; a: string }[];
 }) {
   const url = absolute(path);
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
+  return [
       ...entities(lang),
       {
         "@type": "WebPage",
@@ -250,8 +260,9 @@ export function guideJsonLd({
         inLanguage: lang,
         isPartOf: { "@id": ids.website },
         breadcrumb: { "@id": `${url}#breadcrumb` },
-        primaryImageOfPage: { "@type": "ImageObject", url: ogImage(path), width: 1200, height: 630 },
+        primaryImageOfPage: { "@id": `${url}#primaryimage` },
       },
+      pageImageNode(url, path),
       {
         "@type": "TechArticle",
         "@id": `${url}#article`,
@@ -266,15 +277,14 @@ export function guideJsonLd({
         publisher: { "@id": ids.organization },
         isPartOf: { "@id": ids.website },
         about: { "@id": ids.software },
-        image: [ogImage(path), absolute(`/screenshots/overview-dark-${lang}.png`)],
+        image: [{ "@id": `${url}#primaryimage` }, absolute(`/screenshots/overview-dark-${lang}.png`)],
       },
       breadcrumb(url, [
         { name: homeLabel, url: `/${lang}` },
         { name: title, url: path },
       ]),
       faqPage(url, lang, faq),
-    ],
-  };
+  ];
 }
 
 /** Legal page: entities, WebPage and breadcrumb. */
@@ -294,9 +304,7 @@ export function legalJsonLd({
   homeLabel: string;
 }) {
   const url = absolute(path);
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
+  return [
       ...entities(lang),
       {
         "@type": "WebPage",
@@ -315,9 +323,17 @@ export function legalJsonLd({
         { name: homeLabel, url: `/${lang}` },
         { name: title, url: path },
       ]),
-    ],
-  };
+  ];
 }
+
+export type JsonLdNode = Record<string, unknown> & { "@type": string; "@id"?: string };
+
+/**
+ * One standalone JSON-LD document per entity, each with its own @context. Entities refer
+ * to each other only by @id, so every node shows up as its own item in Google's tools.
+ */
+export const jsonLdDocuments = (nodes: JsonLdNode[]) =>
+  nodes.map((node) => ({ "@context": "https://schema.org", ...node }));
 
 /** Serialize for a <script type="application/ld+json">, escaping `<` against injection. */
 export const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, "\\u003c");

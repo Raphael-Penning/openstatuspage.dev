@@ -1,7 +1,8 @@
 import type { Locale } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { guideAlternates, guideKeys, guidePath, type GuidePage } from "@/lib/routes";
-import { guideJsonLd, serializeJsonLd } from "@/lib/structured-data";
+import { guideJsonLd } from "@/lib/structured-data";
+import { JsonLd } from "@/components/json-ld";
 import { guides, guideUi, guidesUpdated } from "@/content/guides";
 import { ButtonLink, Container } from "@/components/ui/primitives";
 import { Navbar } from "@/components/sections/navbar";
@@ -27,11 +28,8 @@ export function GuideView({ page, lang }: { page: GuidePage; lang: Locale }) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: serializeJsonLd(
-            guideJsonLd({
+      <JsonLd
+        nodes={guideJsonLd({
               lang,
               url,
               title: c.title,
@@ -39,9 +37,7 @@ export function GuideView({ page, lang }: { page: GuidePage; lang: Locale }) {
               updated: guidesUpdated,
               homeLabel: ui.breadcrumbHome,
               faq: c.faq,
-            }),
-          ),
-        }}
+            })}
       />
       <Navbar lang={lang} alternates={alternates} />
       <main id="main" className="relative">

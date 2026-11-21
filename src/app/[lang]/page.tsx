@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "@/lib/i18n";
 import { homeAlternates } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
-import { homeJsonLd, serializeJsonLd } from "@/lib/structured-data";
+import { homeJsonLd } from "@/lib/structured-data";
+import { JsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/sections/navbar";
 import { Hero } from "@/components/sections/hero";
 import { Showcase } from "@/components/sections/showcase";
@@ -48,10 +49,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   if (!hasLocale(lang)) notFound();
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializeJsonLd(homeJsonLd(lang)) }}
-      />
+      <JsonLd nodes={homeJsonLd(lang)} />
       <Navbar lang={lang} />
       <main id="main">
         <Hero lang={lang} />
