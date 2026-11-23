@@ -32,7 +32,7 @@ export const copy: Localized<{
       },
       {
         q: "What do I need to run it?",
-        a: "Docker with Compose or a Kubernetes cluster, plus a reverse proxy that terminates HTTPS. SQLite works with zero configuration; for larger setups you can switch to PostgreSQL. Every release ships a compose.yaml with the app and PostgreSQL. One instance needs around 100 MB of RAM.",
+        a: "Docker Compose 2.23.1 or newer, a Kubernetes cluster, or a Linux server with systemd (.deb and .rpm packages or an install script), plus a reverse proxy that terminates HTTPS. SQLite works with zero configuration; for larger setups switch to PostgreSQL. A send-only mail server with DKIM is bundled. One instance needs around 100 MB of RAM.",
       },
       {
         q: "Can I run it on Kubernetes?",
@@ -56,15 +56,23 @@ export const copy: Localized<{
       },
       {
         q: "Can my customers subscribe to updates?",
-        a: "Yes. Email subscriptions use double opt-in and can cover all updates or only selected services, including maintenance reminders and one-click unsubscribe. RSS and Atom feeds are available too.",
+        a: "Yes. Email subscriptions use double opt-in and can cover all updates or only selected services, including maintenance reminders and one-click unsubscribe. If you allow it, visitors can also subscribe with a Slack, Teams or Discord webhook or by SMS, confirmed with a 6-digit code. RSS and Atom feeds are available too.",
+      },
+      {
+        q: "Can it post to Slack, Microsoft Teams or Discord?",
+        a: "Yes. Admins add webhooks for Slack, Microsoft Teams (Workflows), Discord or generic JSON signed with HMAC-SHA256, for all or selected services. SMS go out through Twilio, Vonage, seven.io, MessageBird or any HTTP provider, with on-call numbers and a monthly budget. Each webhook has a test button and a delivery log.",
+      },
+      {
+        q: "Can I change how the status page looks?",
+        a: "Yes. Pick one of four built-in themes (default, slate, forest, high contrast) or create your own from a JSON file with optional CSS. The editor checks every color pair against WCAG 2.2 AA in light and dark mode. Logo, favicon and images can be uploaded, and content pages are written in Markdown.",
       },
       {
         q: "Does it support single sign-on?",
-        a: "Yes. Besides local users with admin and editor roles, you can connect any OpenID Connect (OIDC) provider for single sign-on, for example Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel or Dex. Groups map to roles, and password logins can be turned off.",
+        a: "Yes. Besides local users with admin and editor roles, you can add any number of OpenID Connect providers in the management UI, for example Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel or Dex. Each gets its own login button and role mapping from a claim, and password logins can be turned off.",
       },
       {
         q: "Is there an API?",
-        a: "Yes, an HTTP API following JSON:API 1.1. Everything public is also available as RSS and Atom feeds.",
+        a: "Yes, an HTTP API following JSON:API 1.1 with an OpenAPI 3.1 description at /api/openapi.json, plus interactive API docs with \"Try it\" in the management UI. Everything public is also available as RSS and Atom feeds.",
         link: { label: "Read the API docs", href: site.apiDocs },
       },
       {
@@ -95,7 +103,7 @@ export const copy: Localized<{
       },
       {
         q: "Was brauche ich für den Betrieb?",
-        a: "Docker mit Compose oder einen Kubernetes-Cluster und dazu einen Reverse Proxy, der HTTPS bereitstellt. SQLite läuft ganz ohne Konfiguration, für größere Installationen kannst du auf PostgreSQL wechseln. Jedes Release enthält eine compose.yaml mit App und PostgreSQL. Eine Instanz braucht rund 100 MB Arbeitsspeicher.",
+        a: "Docker Compose ab 2.23.1, einen Kubernetes-Cluster oder einen Linux-Server mit systemd (.deb- und .rpm-Pakete oder ein Installationsskript) und dazu einen Reverse Proxy, der HTTPS bereitstellt. SQLite läuft ganz ohne Konfiguration, für größere Installationen wechselst du auf PostgreSQL. Ein Mailserver nur für den Versand mit DKIM ist dabei. Eine Instanz braucht rund 100 MB Arbeitsspeicher.",
       },
       {
         q: "Läuft es auf Kubernetes?",
@@ -119,15 +127,23 @@ export const copy: Localized<{
       },
       {
         q: "Können meine Kunden Updates abonnieren?",
-        a: "Ja. E-Mail-Abos laufen mit Double-Opt-in, wahlweise für alle Meldungen oder nur ausgewählte Dienste – inklusive Wartungserinnerungen und Abmeldung mit einem Klick. Außerdem gibt es RSS- und Atom-Feeds.",
+        a: "Ja. E-Mail-Abos laufen mit Double-Opt-in, wahlweise für alle Meldungen oder nur ausgewählte Dienste, inklusive Wartungserinnerungen und Abmeldung mit einem Klick. Wenn du es erlaubst, abonnieren Besucher auch per Slack-, Teams- oder Discord-Webhook oder per SMS, bestätigt mit einem 6-stelligen Code. Außerdem gibt es RSS- und Atom-Feeds.",
+      },
+      {
+        q: "Kann es nach Slack, Microsoft Teams oder Discord posten?",
+        a: "Ja. Admins legen Webhooks für Slack, Microsoft Teams (Workflows), Discord oder allgemeines JSON mit HMAC-SHA256-Signatur an, für alle oder ausgewählte Dienste. SMS gehen über Twilio, Vonage, seven.io, MessageBird oder einen beliebigen HTTP-Anbieter raus, mit Bereitschaftsnummern und Monatsbudget. Jeder Webhook hat einen Test-Button und ein Zustellprotokoll.",
+      },
+      {
+        q: "Kann ich das Aussehen der Statusseite anpassen?",
+        a: "Ja. Wähl eins von vier eingebauten Themes (default, slate, forest, high contrast) oder erstell dein eigenes aus einer JSON-Datei mit optionalem CSS. Der Editor prüft jedes Farbpaar in Hell und Dunkel gegen WCAG 2.2 AA. Logo, Favicon und Bilder lassen sich hochladen, und Inhaltsseiten schreibst du in Markdown.",
       },
       {
         q: "Gibt es Single Sign-on?",
-        a: "Ja. Neben lokalen Benutzern mit den Rollen Admin und Redakteur kannst du jeden OpenID-Connect-Anbieter (OIDC) für die Anmeldung anbinden, etwa Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel oder Dex. Gruppen werden Rollen zugeordnet, und die Anmeldung per Passwort lässt sich abschalten.",
+        a: "Ja. Neben lokalen Benutzern mit den Rollen Admin und Redakteur legst du in der Verwaltung beliebig viele OpenID-Connect-Anbieter an, etwa Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel oder Dex. Jeder bekommt einen eigenen Login-Button und eine Rollenzuordnung aus einem Claim, und die Anmeldung per Passwort lässt sich abschalten.",
       },
       {
         q: "Gibt es eine API?",
-        a: "Ja, eine HTTP-API nach JSON:API 1.1. Alle öffentlichen Inhalte gibt es zusätzlich als RSS- und Atom-Feed.",
+        a: "Ja, eine HTTP-API nach JSON:API 1.1 mit OpenAPI-3.1-Beschreibung unter /api/openapi.json und einer interaktiven API-Doku mit „Ausprobieren“ in der Verwaltung. Alle öffentlichen Inhalte gibt es zusätzlich als RSS- und Atom-Feed.",
         link: { label: "Zur API-Dokumentation", href: site.apiDocs },
       },
       {
