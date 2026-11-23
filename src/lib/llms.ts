@@ -82,7 +82,7 @@ Monitoring adapters: Icinga 2, Uptime Kuma, openITCockpit and a generic webhook 
 ${install}
 \`\`\`
 
-No reverse proxy is included: put your own proxy with HTTPS in front of the app, then open BASE_URL/admin and log in. SQLite works for zero-config setups, PostgreSQL for production. Kubernetes manifests and a split deployment (public page and admin on separate domains, a dedicated worker and a read-only database role) are documented in the guide: ${site.docs("en")}
+No reverse proxy is included: put your own proxy with HTTPS in front of the app, then open BASE_URL/admin and log in. SQLite works for zero-config setups, PostgreSQL for production. A Helm chart (oci://ghcr.io/raphael-penning/charts/openstatuspage), Kustomize manifests and a split deployment (public page and admin on separate domains, a dedicated worker and a read-only database role) are documented in the guide: ${site.docs("en")}
 
 ## FAQ
 
