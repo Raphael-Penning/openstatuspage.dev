@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
+import { guidePath } from "@/lib/routes";
 import { Code, H2, Table, type Guide } from "./shared";
 
 const adapterDoc = `${site.github}/blob/main/docs/adapters/icinga2.md`;
@@ -124,7 +125,7 @@ export const icingaGuide: Guide = {
         <H2>Setup in four steps</H2>
         <ol>
           <li>
-            Install OpenStatusPage with Docker Compose (see the <Link href="/en#quickstart">quick start</Link>)
+            Install OpenStatusPage with Docker Compose (see the <Link href="/en#quickstart">quick start</Link>) or the <Link href={guidePath("kubernetes", "en")}>Helm chart</Link>
             and put your reverse proxy with HTTPS in front of it.
           </li>
           <li>
@@ -275,8 +276,8 @@ export const icingaGuide: Guide = {
         <H2>Einrichtung in vier Schritten</H2>
         <ol>
           <li>
-            OpenStatusPage mit Docker Compose installieren (siehe{" "}
-            <Link href="/de#quickstart">Schnellstart</Link>) und deinen Reverse Proxy mit HTTPS
+            OpenStatusPage mit Docker Compose (siehe <Link href="/de#quickstart">Schnellstart</Link>)
+            oder dem <Link href={guidePath("kubernetes", "de")}>Helm-Chart</Link> installieren und deinen Reverse Proxy mit HTTPS
             davorsetzen.
           </li>
           <li>

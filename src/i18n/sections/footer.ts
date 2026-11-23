@@ -1,3 +1,4 @@
+import type { GuidePage } from "@/lib/routes";
 import type { Localized } from "@/lib/i18n";
 
 type FooterCopy = {
@@ -13,7 +14,7 @@ type FooterCopy = {
       contributing: string;
     };
     project: { title: string; github: string; license: string; sponsor: string };
-    guides: { title: string; alternatives: string; icinga: string; uptimeKuma: string };
+    guides: { title: string } & Record<GuidePage, string>;
   };
   builtWith: string;
   builtWithCta: string;
@@ -59,6 +60,8 @@ export const copy: Localized<FooterCopy> = {
         alternatives: "Statuspage alternatives",
         icinga: "Icinga 2 status page",
         uptimeKuma: "Uptime Kuma status page",
+        openitcockpit: "openITCockpit status page",
+        kubernetes: "Kubernetes & Helm",
       },
     },
     builtWith: "Built something with OpenStatusPage?",
@@ -103,6 +106,8 @@ export const copy: Localized<FooterCopy> = {
         alternatives: "Statuspage-Alternativen",
         icinga: "Icinga-2-Statusseite",
         uptimeKuma: "Uptime-Kuma-Statusseite",
+        openitcockpit: "openITCockpit-Statusseite",
+        kubernetes: "Kubernetes & Helm",
       },
     },
     builtWith: "Du setzt OpenStatusPage ein?",

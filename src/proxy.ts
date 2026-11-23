@@ -32,14 +32,16 @@ export function proxy(request: NextRequest) {
 
   // Unknown pages under a locale: answer with a real 404 instead of the
   // prerendered fallback shell (which would be a soft 404 for crawlers).
-  if (!knownPaths.has(path) && !path.endsWith("/opengraph-image")) {
+  // OG cards are allowed only for those same known pages.
+  if (!knownPaths.has(path.replace(/\/opengraph-image$/, ""))) {
     request.nextUrl.pathname = "/_/not/found";
     return NextResponse.rewrite(request.nextUrl, { status: 404 });
   }
 }
 
 export const config = {
-  // Skip Next internals, extension-less metadata files (apple-icon) and anything with a
-  // file extension (screenshots, icons, …)
-  matcher: ["/((?!_next|apple-icon|.*\\..*).*)"],
+  // Skip Next internals, the extension-less apple-icon and files with an extension in the
+  // last segment (screenshots, icons, sitemap.xml, …). Segment-exact, so "/x.y/…" still
+  // goes through the proxy.
+  matcher: ["/((?!_next/|apple-icon$|.*\\.[A-Za-z0-9]+$).*)"],
 };

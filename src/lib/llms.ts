@@ -34,6 +34,8 @@ This site (${site.domain}) is the project's landing page, available in English a
 - [Open-source alternatives to Atlassian Statuspage](${absolute(guidePath("alternatives", "en"))}): neutral comparison of OpenStatusPage, Cachet, Upptime, Gatus, Uptime Kuma, cState and Kener
 - [A public status page for Icinga 2](${absolute(guidePath("icinga", "en"))}): REST API pull or notification push, hard states only, no host names for visitors
 - [A customer-facing status page for Uptime Kuma](${absolute(guidePath("uptimeKuma", "en"))}): services instead of monitors, check bundles across several Kuma nodes, email subscriptions
+- [A public status page for openITCockpit](${absolute(guidePath("openitcockpit", "en"))}): JSON API pull or Naemon notification push; adapter not yet verified against a real installation
+- [A status page on Kubernetes with Helm](${absolute(guidePath("kubernetes", "en"))}): OCI Helm chart, single instance or split public/admin/worker, NetworkPolicies, HPA, hardened pods
 
 ## Docs
 
@@ -57,7 +59,8 @@ export function llmsFullTxt() {
   const f = features.en;
   const items = [
     f.privacy, f.composition, f.bundles, f.uptime, f.locations, f.email,
-    f.sso, f.database, f.i18n, f.noJs, f.seo, f.api,
+    f.privatePages, f.history, f.kubernetes, f.sso, f.database, f.i18n,
+    f.noJs, f.a11y, f.lightweight, f.branding, f.seo, f.api,
   ];
   return `# ${site.name}
 
@@ -81,7 +84,7 @@ Monitoring adapters: Icinga 2, Uptime Kuma, openITCockpit and a generic webhook 
 ${install}
 \`\`\`
 
-No reverse proxy is included: put your own proxy with HTTPS in front of the app, then open BASE_URL/admin and log in. SQLite works for zero-config setups, PostgreSQL for production. Kubernetes manifests and a split deployment (public page and admin on separate domains, a dedicated worker and a read-only database role) are documented in the guide: ${site.docs("en")}
+No reverse proxy is included: put your own proxy with HTTPS in front of the app, then open BASE_URL/admin and log in. SQLite works for zero-config setups, PostgreSQL for production. A Helm chart (oci://ghcr.io/raphael-penning/charts/openstatuspage), Kustomize manifests and a split deployment (public page and admin on separate domains, a dedicated worker and a read-only database role) are documented in the guide: ${site.docs("en")}
 
 ## FAQ
 

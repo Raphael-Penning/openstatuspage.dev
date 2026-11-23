@@ -18,6 +18,12 @@ type FeaturesCopy = {
   noJs: Item;
   seo: Item;
   api: Item;
+  privatePages: Item;
+  history: Item;
+  a11y: Item;
+  kubernetes: Item;
+  lightweight: Item;
+  branding: Item;
 };
 
 export const copy: Localized<FeaturesCopy> = {
@@ -53,7 +59,7 @@ export const copy: Localized<FeaturesCopy> = {
     },
     uptime: {
       title: "90-day uptime bars",
-      text: "Services and sites grouped the way your users think about them, each with a 90-day history at a glance.",
+      text: "Services and sites grouped the way your users think about them, each with a 90-day history (7 to 180 days configurable). Every day links to its own page with the incidents of that day.",
       daysAgo: "90 days ago",
       today: "Today",
       uptime: "uptime",
@@ -70,11 +76,11 @@ export const copy: Localized<FeaturesCopy> = {
     },
     sso: {
       title: "OIDC single sign-on",
-      text: "Local users with admin and editor roles, plus optional single sign-on via OIDC.",
+      text: "Local users with admin and editor roles, plus single sign-on via OpenID Connect: Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel or Dex, with group-to-role mapping.",
     },
     database: {
       title: "SQLite or PostgreSQL",
-      text: "Start with zero-config SQLite, switch to PostgreSQL when you need it.",
+      text: "Start with zero-config SQLite, switch to PostgreSQL for production, several instances and the split deployment.",
     },
     i18n: {
       title: "English & German",
@@ -82,7 +88,7 @@ export const copy: Localized<FeaturesCopy> = {
     },
     noJs: {
       title: "Works without JavaScript",
-      text: "Every public page is rendered on the server. Fast, robust and readable anywhere.",
+      text: "Every public page is rendered on the server; filters, search and subscription forms work without scripts too.",
     },
     seo: {
       title: "Ready for search and AI agents",
@@ -90,7 +96,31 @@ export const copy: Localized<FeaturesCopy> = {
     },
     api: {
       title: "JSON:API and feeds",
-      text: "A JSON:API 1.1 HTTP API plus RSS and Atom feeds for incidents and maintenance.",
+      text: "A JSON:API 1.1 HTTP API with role-based API tokens, plus RSS and Atom feeds for incidents and maintenance.",
+    },
+    privatePages: {
+      title: "Private status pages",
+      text: "Share a secret link with selected services, even hidden ones, for a customer or partner. Optional expiry, never indexed, no analytics.",
+    },
+    history: {
+      title: "History import and corrections",
+      text: "Fill up to two years of history from Icinga DB, Uptime Kuma, openITCockpit or CSV. Mark false alarms afterwards without touching the recorded data.",
+    },
+    a11y: {
+      title: "Accessible (WCAG 2.2 AA)",
+      text: "Public page and emails target WCAG 2.2 AA, checked with axe-core. Status is never shown by color alone, and there is no CAPTCHA.",
+    },
+    kubernetes: {
+      title: "Docker Compose, Helm or Kustomize",
+      text: "A compose file per release, a Helm chart with split mode, NetworkPolicies, autoscaling and PodDisruptionBudget, plus Kustomize manifests.",
+    },
+    lightweight: {
+      title: "Light and fast",
+      text: "Around 100 MB of RAM per instance and Lighthouse 100 in every category on mobile and desktop.",
+    },
+    branding: {
+      title: "Your brand",
+      text: "Logo, favicon, any accent color (contrast is adjusted automatically), light or dark theme, footer and legal links.",
     },
   },
   de: {
@@ -125,7 +155,7 @@ export const copy: Localized<FeaturesCopy> = {
     },
     uptime: {
       title: "Verfügbarkeit über 90 Tage",
-      text: "Dienste und Standorte so gruppiert, wie deine Nutzer an sie denken, jeweils mit 90 Tagen Verlauf auf einen Blick.",
+      text: "Dienste und Standorte so gruppiert, wie deine Nutzer an sie denken, jeweils mit 90 Tagen Verlauf (7 bis 180 Tage einstellbar). Jeder Tag führt auf eine eigene Seite mit den Störungen dieses Tages.",
       daysAgo: "vor 90 Tagen",
       today: "Heute",
       uptime: "Verfügbarkeit",
@@ -142,11 +172,11 @@ export const copy: Localized<FeaturesCopy> = {
     },
     sso: {
       title: "Single Sign-on per OIDC",
-      text: "Lokale Benutzer mit den Rollen Admin und Redakteur, dazu optional Anmeldung per OIDC.",
+      text: "Lokale Benutzer mit den Rollen Admin und Redakteur, dazu Single Sign-on per OpenID Connect: Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel oder Dex, mit Zuordnung von Gruppen zu Rollen.",
     },
     database: {
       title: "SQLite oder PostgreSQL",
-      text: "Starte ohne Einrichtung mit SQLite und wechsle zu PostgreSQL, wenn du es brauchst.",
+      text: "Starte ohne Einrichtung mit SQLite und wechsle zu PostgreSQL für den Produktivbetrieb, mehrere Instanzen und das getrennte Deployment.",
     },
     i18n: {
       title: "Deutsch & Englisch",
@@ -154,7 +184,7 @@ export const copy: Localized<FeaturesCopy> = {
     },
     noJs: {
       title: "Läuft ohne JavaScript",
-      text: "Jede öffentliche Seite wird auf dem Server gerendert. Schnell, robust und überall lesbar.",
+      text: "Jede öffentliche Seite wird auf dem Server gerendert, auch Filter, Suche und Abo-Formulare funktionieren ohne Skript.",
     },
     seo: {
       title: "Bereit für Suchmaschinen und KI-Agenten",
@@ -162,7 +192,31 @@ export const copy: Localized<FeaturesCopy> = {
     },
     api: {
       title: "JSON:API und Feeds",
-      text: "Eine HTTP-API nach JSON:API 1.1 sowie RSS- und Atom-Feeds für Störungen und Wartungen.",
+      text: "Eine HTTP-API nach JSON:API 1.1 mit API-Tokens pro Rolle sowie RSS- und Atom-Feeds für Störungen und Wartungen.",
+    },
+    privatePages: {
+      title: "Private Statusseiten",
+      text: "Teile einen geheimen Link mit ausgewählten Diensten, auch verborgenen, für einen Kunden oder Partner. Optional mit Ablaufdatum, nie indexiert, ohne Statistik.",
+    },
+    history: {
+      title: "Historie importieren und korrigieren",
+      text: "Übernimm bis zu zwei Jahre Verlauf aus Icinga DB, Uptime Kuma, openITCockpit oder CSV. Markiere Fehlalarme nachträglich, ohne die aufgezeichneten Daten zu verändern.",
+    },
+    a11y: {
+      title: "Barrierefrei (WCAG 2.2 AA)",
+      text: "Öffentliche Seite und E-Mails zielen auf WCAG 2.2 AA, geprüft mit axe-core. Status wird nie nur über Farbe gezeigt, und es gibt kein CAPTCHA.",
+    },
+    kubernetes: {
+      title: "Docker Compose, Helm oder Kustomize",
+      text: "Eine Compose-Datei pro Release, ein Helm-Chart mit getrenntem Betrieb, NetworkPolicies, Autoscaling und PodDisruptionBudget sowie Kustomize-Manifeste.",
+    },
+    lightweight: {
+      title: "Schlank und schnell",
+      text: "Rund 100 MB Arbeitsspeicher pro Instanz und Lighthouse 100 in allen Kategorien, mobil und am Desktop.",
+    },
+    branding: {
+      title: "Dein Branding",
+      text: "Logo, Favicon, beliebige Akzentfarbe (der Kontrast wird automatisch angepasst), helles oder dunkles Design, Footer- und Rechtslinks.",
     },
   },
 };

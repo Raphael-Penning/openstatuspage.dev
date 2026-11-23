@@ -8,6 +8,9 @@ export const site = {
   releases: "https://github.com/Raphael-Penning/openstatuspage/releases",
   demo: "https://openstatus.partlabs.de",
   license: "AGPL-3.0",
+  /** Latest release of the software (keep in sync with the main repo's CHANGELOG). */
+  version: "0.3.1",
+  versionDate: "2026-11-22",
   image: "ghcr.io/raphael-penning/openstatuspage",
   docs: (lang: Locale) =>
     `https://github.com/Raphael-Penning/openstatuspage/blob/main/docs/guide/${lang}/01-overview.md`,
@@ -15,7 +18,7 @@ export const site = {
   changelog: "https://github.com/Raphael-Penning/openstatuspage/blob/main/CHANGELOG.md",
   contributing: "https://github.com/Raphael-Penning/openstatuspage/blob/main/CONTRIBUTING.md",
   /** Last content update, used as <lastmod> in the sitemaps. */
-  updated: "2026-11-21",
+  updated: "2026-11-23",
   email: "penning@partlabs.de",
   sponsorMail: "mailto:penning@partlabs.de",
 } as const;

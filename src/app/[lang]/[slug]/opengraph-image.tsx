@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { hasLocale, locales, type Locale } from "@/lib/i18n";
 import { allSlugs, pageFromSlug } from "@/lib/routes";
 import { ogContentType, ogImage, ogSize, ogText } from "@/lib/og";
@@ -20,13 +21,15 @@ export default async function Image({
 }: {
   params: Promise<{ lang: string; slug: string }>;
 }) {
-  const { lang: raw, slug } = await params;
-  const lang: Locale = hasLocale(raw) ? raw : "en";
+  const { lang, slug } = await params;
+  // Only render cards for pages that exist; unknown locales or slugs are a 404.
+  if (!hasLocale(lang)) notFound();
   const page = pageFromSlug(slug, lang);
-  if (page?.kind === "guide") {
+  if (!page) notFound();
+  if (page.kind === "guide") {
     const g = guides[page.page][lang];
     return ogImage({ title: g.title, eyebrow: g.eyebrow, ...ogText[lang] });
   }
-  const title = page ? legalContent[page.page][lang].title : "OpenStatusPage";
+  const title = legalContent[page.page][lang].title;
   return ogImage({ title, eyebrow: legalEyebrow[lang], ...ogText[lang] });
 }

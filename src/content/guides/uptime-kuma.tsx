@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
+import { guidePath } from "@/lib/routes";
 import { H2, Table, type Guide } from "./shared";
 
 const adapterDoc = `${site.github}/blob/main/docs/adapters/uptime-kuma.md`;
@@ -101,7 +102,7 @@ export const uptimeKumaGuide: Guide = {
         <H2>Setup in four steps</H2>
         <ol>
           <li>
-            Install OpenStatusPage with Docker Compose (see the <Link href="/en#quickstart">quick start</Link>).
+            Install OpenStatusPage with Docker Compose (see the <Link href="/en#quickstart">quick start</Link>) or the <Link href={guidePath("kubernetes", "en")}>Helm chart</Link>.
           </li>
           <li>
             Create an API key in Uptime Kuma and add a monitoring source of type{" "}
@@ -238,8 +239,8 @@ export const uptimeKumaGuide: Guide = {
         <H2>Einrichtung in vier Schritten</H2>
         <ol>
           <li>
-            OpenStatusPage mit Docker Compose installieren (siehe{" "}
-            <Link href="/de#quickstart">Schnellstart</Link>).
+            OpenStatusPage mit Docker Compose (siehe <Link href="/de#quickstart">Schnellstart</Link>)
+            oder dem <Link href={guidePath("kubernetes", "de")}>Helm-Chart</Link> installieren.
           </li>
           <li>
             In Uptime Kuma einen API-Schlüssel anlegen und in OpenStatusPage eine Monitoring-Quelle

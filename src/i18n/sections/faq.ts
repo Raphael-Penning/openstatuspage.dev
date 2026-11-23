@@ -27,16 +27,32 @@ export const copy: Localized<{
         a: "Yes. OpenStatusPage is open source under the AGPL-3.0 license and you host it yourself. No accounts, no seats, no paid tiers.",
       },
       {
+        q: "Is OpenStatusPage the same as openstatus?",
+        a: "No. openstatus (openstatus.dev) is a separate project that runs its own uptime checks and is also offered as a hosted service. OpenStatusPage does not monitor anything itself: it turns the monitoring you already run (Icinga 2, Uptime Kuma, openITCockpit, webhooks) into a public status page, on your own servers.",
+      },
+      {
         q: "What do I need to run it?",
-        a: "Docker with Compose or a Kubernetes cluster, plus a reverse proxy that terminates HTTPS. SQLite works with zero configuration; for larger setups you can switch to PostgreSQL. Every release ships a compose.yaml with the app and PostgreSQL.",
+        a: "Docker with Compose or a Kubernetes cluster, plus a reverse proxy that terminates HTTPS. SQLite works with zero configuration; for larger setups you can switch to PostgreSQL. Every release ships a compose.yaml with the app and PostgreSQL. One instance needs around 100 MB of RAM.",
+      },
+      {
+        q: "Can I run it on Kubernetes?",
+        a: "Yes. There is a Helm chart (oci://ghcr.io/raphael-penning/charts/openstatuspage) for Kubernetes 1.25 or newer, either as a single instance or split into public, admin and worker with NetworkPolicies, autoscaling and a PodDisruptionBudget. Kustomize manifests are included as well.",
       },
       {
         q: "Which monitoring tools are supported?",
         a: "Icinga 2, Uptime Kuma and openITCockpit out of the box, plus a generic webhook adapter that can pull or receive pushes from anything else. Several monitoring nodes can vote with weights on the state of one target.",
       },
       {
+        q: "Can I import my existing uptime history?",
+        a: "Yes. Administrators can import up to 731 days from the Icinga DB database, from Uptime Kuma, from openITCockpit or from a CSV file. Imports only fill gaps and never overwrite recorded history, and you see a preview before anything is applied.",
+      },
+      {
         q: "Will visitors see my hostnames or check outputs?",
         a: "No. Visitors only see the services, sites and locations you curate. Check names, hosts and outputs stay inside the management area: private by design.",
+      },
+      {
+        q: "Can I show a status page to a single customer only?",
+        a: "Yes, with private status pages. You pick the services, including hidden ones, and share a secret link with an optional expiry date. Private pages are never indexed or cached and have no analytics.",
       },
       {
         q: "Can my customers subscribe to updates?",
@@ -44,7 +60,7 @@ export const copy: Localized<{
       },
       {
         q: "Does it support single sign-on?",
-        a: "Yes. Besides local users with admin and editor roles, you can connect any OpenID Connect (OIDC) provider for single sign-on.",
+        a: "Yes. Besides local users with admin and editor roles, you can connect any OpenID Connect (OIDC) provider for single sign-on, for example Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel or Dex. Groups map to roles, and password logins can be turned off.",
       },
       {
         q: "Is there an API?",
@@ -53,7 +69,7 @@ export const copy: Localized<{
       },
       {
         q: "Is it production ready?",
-        a: "Honestly: OpenStatusPage is in early development. Releases are versioned and every change is documented, so check the changelog and test an upgrade before you roll it out.",
+        a: `OpenStatusPage is at version ${site.version} and still young. Releases are versioned, and the changelog lists every change with upgrade notes.`,
         link: { label: "View the changelog", href: site.changelog },
       },
       {
@@ -74,16 +90,32 @@ export const copy: Localized<{
         a: "Ja. OpenStatusPage ist Open Source unter der AGPL-3.0 und du betreibst es selbst. Keine Konten, keine Lizenzen pro Nutzer, keine Bezahlstufen.",
       },
       {
+        q: "Ist OpenStatusPage dasselbe wie openstatus?",
+        a: "Nein. openstatus (openstatus.dev) ist ein eigenständiges Projekt, das selbst Verfügbarkeits-Checks ausführt und auch als gehosteter Dienst angeboten wird. OpenStatusPage überwacht nichts selbst: Es macht aus dem Monitoring, das du schon betreibst (Icinga 2, Uptime Kuma, openITCockpit, Webhooks), eine öffentliche Statusseite, auf deinen eigenen Servern.",
+      },
+      {
         q: "Was brauche ich für den Betrieb?",
-        a: "Docker mit Compose oder einen Kubernetes-Cluster und dazu einen Reverse Proxy, der HTTPS bereitstellt. SQLite läuft ganz ohne Konfiguration, für größere Installationen kannst du auf PostgreSQL wechseln. Jedes Release enthält eine compose.yaml mit App und PostgreSQL.",
+        a: "Docker mit Compose oder einen Kubernetes-Cluster und dazu einen Reverse Proxy, der HTTPS bereitstellt. SQLite läuft ganz ohne Konfiguration, für größere Installationen kannst du auf PostgreSQL wechseln. Jedes Release enthält eine compose.yaml mit App und PostgreSQL. Eine Instanz braucht rund 100 MB Arbeitsspeicher.",
+      },
+      {
+        q: "Läuft es auf Kubernetes?",
+        a: "Ja. Es gibt ein Helm-Chart (oci://ghcr.io/raphael-penning/charts/openstatuspage) für Kubernetes ab 1.25, wahlweise als einzelne Instanz oder getrennt in Public, Admin und Worker mit NetworkPolicies, Autoscaling und PodDisruptionBudget. Kustomize-Manifeste sind ebenfalls dabei.",
       },
       {
         q: "Welche Monitoring-Werkzeuge werden unterstützt?",
         a: "Icinga 2, Uptime Kuma und openITCockpit direkt, dazu ein allgemeiner Webhook-Adapter, der Daten abruft oder entgegennimmt. Mehrere Monitoring-Knoten können gewichtet über den Zustand eines Ziels abstimmen.",
       },
       {
+        q: "Kann ich meine bisherige Verfügbarkeits-Historie übernehmen?",
+        a: "Ja. Administratoren importieren bis zu 731 Tage aus der Icinga-DB-Datenbank, aus Uptime Kuma, aus openITCockpit oder aus einer CSV-Datei. Importe füllen nur Lücken und überschreiben nie die aufgezeichnete Historie, und vor dem Übernehmen siehst du eine Vorschau.",
+      },
+      {
         q: "Sehen Besucher meine Hostnamen oder Check-Ausgaben?",
         a: "Nein. Besucher sehen nur die Dienste, Sites und Standorte, die du freigibst. Check-Namen, Hosts und Ausgaben bleiben im Verwaltungsbereich – privat von Grund auf.",
+      },
+      {
+        q: "Kann ich eine Statusseite nur für einen Kunden zeigen?",
+        a: "Ja, mit privaten Statusseiten. Du wählst die Dienste aus, auch verborgene, und teilst einen geheimen Link mit optionalem Ablaufdatum. Private Seiten werden nie indexiert oder zwischengespeichert und haben keine Statistik.",
       },
       {
         q: "Können meine Kunden Updates abonnieren?",
@@ -91,7 +123,7 @@ export const copy: Localized<{
       },
       {
         q: "Gibt es Single Sign-on?",
-        a: "Ja. Neben lokalen Benutzern mit den Rollen Admin und Redakteur kannst du jeden OpenID-Connect-Anbieter (OIDC) für die Anmeldung anbinden.",
+        a: "Ja. Neben lokalen Benutzern mit den Rollen Admin und Redakteur kannst du jeden OpenID-Connect-Anbieter (OIDC) für die Anmeldung anbinden, etwa Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel oder Dex. Gruppen werden Rollen zugeordnet, und die Anmeldung per Passwort lässt sich abschalten.",
       },
       {
         q: "Gibt es eine API?",
@@ -100,7 +132,7 @@ export const copy: Localized<{
       },
       {
         q: "Ist es bereit für den Produktivbetrieb?",
-        a: "Ehrlich gesagt: OpenStatusPage steckt noch in einer frühen Entwicklungsphase. Releases sind versioniert und jede Änderung ist dokumentiert – lies das Changelog und teste ein Update, bevor du es ausrollst.",
+        a: `OpenStatusPage ist bei Version ${site.version} und noch jung. Releases sind versioniert, und das Changelog führt jede Änderung samt Hinweisen zum Update auf.`,
         link: { label: "Zum Changelog", href: site.changelog },
       },
       {
