@@ -24,12 +24,12 @@ const meta = {
   en: {
     title: "OpenStatusPage — the self-hosted, open-source status page",
     description:
-      "Keep your customers informed without exposing your infrastructure. Compose public services from Icinga 2, Uptime Kuma, openITCockpit or webhooks. Self-hosted, AGPL-3.0.",
+      "Open-source status page that keeps your infrastructure private. Built from Icinga 2, Uptime Kuma, openITCockpit or webhooks. Self-hosted via Docker or Helm.",
   },
   de: {
     title: "OpenStatusPage — die selbst gehostete Open-Source-Statusseite",
     description:
-      "Informiere deine Kunden, ohne deine Infrastruktur offenzulegen. Öffentliche Dienste aus Icinga 2, Uptime Kuma, openITCockpit oder Webhooks. Selbst gehostet, AGPL-3.0.",
+      "Open-Source-Statusseite, die deine Infrastruktur privat hält. Aus Icinga 2, Uptime Kuma, openITCockpit oder Webhooks. Selbst gehostet per Docker oder Helm.",
   },
 } as const;
 
