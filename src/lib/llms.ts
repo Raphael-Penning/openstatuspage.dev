@@ -36,6 +36,7 @@ This site (${site.domain}) is the project's landing page, available in English a
 - [A customer-facing status page for Uptime Kuma](${absolute(guidePath("uptimeKuma", "en"))}): services instead of monitors, check bundles across several Kuma nodes, email subscriptions
 - [A public status page for openITCockpit](${absolute(guidePath("openitcockpit", "en"))}): JSON API pull or Naemon notification push; adapter not yet verified against a real installation
 - [A status page on Kubernetes with Helm](${absolute(guidePath("kubernetes", "en"))}): OCI Helm chart, single instance or split public/admin/worker, NetworkPolicies, HPA, hardened pods
+- [Notifications in Slack, Teams, Discord and by SMS](${absolute(guidePath("notifications", "en"))}): team webhooks, signed JSON, SMS providers, visitor subscriptions, SSRF guard
 
 ## Docs
 
