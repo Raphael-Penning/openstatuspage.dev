@@ -144,6 +144,24 @@ const icons = {
       <circle cx="14.5" cy="7.5" r="1" />
     </Icon>
   ),
+  bell: (
+    <Icon>
+      <path d="M6 9.5a6 6 0 0 1 12 0c0 4.5 1.5 6 2 6.5H4c.5-.5 2-2 2-6.5Z" />
+      <path d="M10 19a2 2 0 0 0 4 0" />
+    </Icon>
+  ),
+  page: (
+    <Icon>
+      <path d="M6 3h8l4 4v14H6z" />
+      <path d="M14 3v4h4M9 12h6M9 16h6" />
+    </Icon>
+  ),
+  pkg: (
+    <Icon>
+      <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+      <path d="m4 7.5 8 4.5 8-4.5M12 12v9" />
+    </Icon>
+  ),
   check: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="size-3.5" aria-hidden>
       <path d="m5 12.5 4.5 4.5L19 7.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -468,7 +486,9 @@ export function Features({ lang }: { lang: Locale }) {
           </FeatureCard>
           <FeatureCard icon={icons.link} title={t.privatePages.title} text={t.privatePages.text} />
           <FeatureCard icon={icons.history} title={t.history.title} text={t.history.text} />
+          <FeatureCard icon={icons.bell} title={t.notifications.title} text={t.notifications.text} />
           <FeatureCard icon={icons.helm} title={t.kubernetes.title} text={t.kubernetes.text} />
+          <FeatureCard icon={icons.pkg} title={t.noContainers.title} text={t.noContainers.text} />
           <FeatureCard icon={icons.key} title={t.sso.title} text={t.sso.text} />
           <FeatureCard icon={icons.database} title={t.database.title} text={t.database.text} />
           <FeatureCard icon={icons.languages} title={t.i18n.title} text={t.i18n.text} />
@@ -476,13 +496,9 @@ export function Features({ lang }: { lang: Locale }) {
           <FeatureCard icon={icons.a11y} title={t.a11y.title} text={t.a11y.text} />
           <FeatureCard icon={icons.gauge} title={t.lightweight.title} text={t.lightweight.text} />
           <FeatureCard icon={icons.palette} title={t.branding.title} text={t.branding.text} />
+          <FeatureCard icon={icons.page} title={t.contentPages.title} text={t.contentPages.text} />
           <FeatureCard icon={icons.sparkle} title={t.seo.title} text={t.seo.text} />
-          <FeatureCard
-            className="sm:col-span-2 lg:col-span-1"
-            icon={icons.braces}
-            title={t.api.title}
-            text={t.api.text}
-          />
+          <FeatureCard icon={icons.braces} title={t.api.title} text={t.api.text} />
         </ul>
       </Container>
     </Section>

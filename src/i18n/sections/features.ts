@@ -11,7 +11,7 @@ type FeaturesCopy = {
   bundles: Item & { weight: string; result: string; nodes: [string, string, string]; up: string; down: string; target: string };
   uptime: Item & { daysAgo: string; today: string; uptime: string; serviceName: string };
   locations: Item;
-  email: Item & { points: [string, string, string] };
+  email: Item & { points: string[] };
   sso: Item;
   database: Item;
   i18n: Item;
@@ -24,6 +24,9 @@ type FeaturesCopy = {
   kubernetes: Item;
   lightweight: Item;
   branding: Item;
+  notifications: Item;
+  contentPages: Item;
+  noContainers: Item;
 };
 
 export const copy: Localized<FeaturesCopy> = {
@@ -71,12 +74,12 @@ export const copy: Localized<FeaturesCopy> = {
     },
     email: {
       title: "Email subscriptions",
-      text: "Visitors subscribe to all updates or just the services they care about.",
-      points: ["Double opt-in", "Maintenance reminders", "One-click unsubscribe"],
+      text: "Visitors subscribe to all updates or just the services they care about. A send-only mail server with DKIM is bundled, or use any SMTP server.",
+      points: ["Double opt-in", "Maintenance reminders", "One-click unsubscribe", "SPF, DKIM and DMARC records shown"],
     },
     sso: {
       title: "OIDC single sign-on",
-      text: "Local users with admin and editor roles, plus single sign-on via OpenID Connect: Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel or Dex, with group-to-role mapping.",
+      text: "Local users with admin and editor roles, plus any number of OpenID Connect providers managed in the UI: Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel or Dex, with role mapping from claims.",
     },
     database: {
       title: "SQLite or PostgreSQL",
@@ -96,7 +99,7 @@ export const copy: Localized<FeaturesCopy> = {
     },
     api: {
       title: "JSON:API and feeds",
-      text: "A JSON:API 1.1 HTTP API with role-based API tokens, plus RSS and Atom feeds for incidents and maintenance.",
+      text: "A JSON:API 1.1 HTTP API with an OpenAPI 3.1 description, interactive docs in the admin and role-based tokens, plus RSS and Atom feeds.",
     },
     privatePages: {
       title: "Private status pages",
@@ -114,13 +117,25 @@ export const copy: Localized<FeaturesCopy> = {
       title: "Docker Compose, Helm or Kustomize",
       text: "A compose file per release, a Helm chart with split mode, NetworkPolicies, autoscaling and PodDisruptionBudget, plus Kustomize manifests.",
     },
+    notifications: {
+      title: "Slack, Teams, Discord and SMS",
+      text: "Post incidents and maintenance to Slack, Microsoft Teams, Discord or signed JSON webhooks, and send SMS via Twilio, Vonage, seven.io or MessageBird. Visitors can subscribe too.",
+    },
+    contentPages: {
+      title: "Content pages",
+      text: "Write the about page, legal notice, privacy policy, accessibility statement and your own pages in Markdown, per language, with a preview.",
+    },
+    noContainers: {
+      title: "Also without Docker",
+      text: ".deb and .rpm packages, release tarballs and an install script with hardened systemd units, optional local PostgreSQL and mail server.",
+    },
     lightweight: {
       title: "Light and fast",
       text: "Around 100 MB of RAM per instance and Lighthouse 100 in every category on mobile and desktop.",
     },
     branding: {
-      title: "Your brand",
-      text: "Logo, favicon, any accent color (contrast is adjusted automatically), light or dark theme, footer and legal links.",
+      title: "Themes and branding",
+      text: "Four built-in themes or your own, each checked against WCAG 2.2 AA in light and dark, with a live editor. Upload logo, favicon and images.",
     },
   },
   de: {
@@ -167,12 +182,12 @@ export const copy: Localized<FeaturesCopy> = {
     },
     email: {
       title: "E-Mail-Abos",
-      text: "Besucher abonnieren alle Meldungen oder nur die Dienste, die sie wirklich interessieren.",
-      points: ["Double-Opt-in", "Erinnerung vor Wartungen", "Abmelden mit einem Klick"],
+      text: "Besucher abonnieren alle Meldungen oder nur die Dienste, die sie wirklich interessieren. Ein Mailserver nur für den Versand mit DKIM ist dabei, oder du nutzt einen beliebigen SMTP-Server.",
+      points: ["Double-Opt-in", "Erinnerung vor Wartungen", "Abmelden mit einem Klick", "SPF-, DKIM- und DMARC-Einträge angezeigt"],
     },
     sso: {
       title: "Single Sign-on per OIDC",
-      text: "Lokale Benutzer mit den Rollen Admin und Redakteur, dazu Single Sign-on per OpenID Connect: Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel oder Dex, mit Zuordnung von Gruppen zu Rollen.",
+      text: "Lokale Benutzer mit den Rollen Admin und Redakteur, dazu beliebig viele OpenID-Connect-Anbieter, verwaltet in der Oberfläche: Keycloak, Microsoft Entra ID, Authentik, Okta, Zitadel oder Dex, mit Rollen aus Claims.",
     },
     database: {
       title: "SQLite oder PostgreSQL",
@@ -192,7 +207,7 @@ export const copy: Localized<FeaturesCopy> = {
     },
     api: {
       title: "JSON:API und Feeds",
-      text: "Eine HTTP-API nach JSON:API 1.1 mit API-Tokens pro Rolle sowie RSS- und Atom-Feeds für Störungen und Wartungen.",
+      text: "Eine HTTP-API nach JSON:API 1.1 mit OpenAPI-3.1-Beschreibung, interaktiver Doku in der Verwaltung und Tokens pro Rolle, dazu RSS- und Atom-Feeds.",
     },
     privatePages: {
       title: "Private Statusseiten",
@@ -210,13 +225,25 @@ export const copy: Localized<FeaturesCopy> = {
       title: "Docker Compose, Helm oder Kustomize",
       text: "Eine Compose-Datei pro Release, ein Helm-Chart mit getrenntem Betrieb, NetworkPolicies, Autoscaling und PodDisruptionBudget sowie Kustomize-Manifeste.",
     },
+    notifications: {
+      title: "Slack, Teams, Discord und SMS",
+      text: "Schick Störungen und Wartungen an Slack, Microsoft Teams, Discord oder signierte JSON-Webhooks und per SMS über Twilio, Vonage, seven.io oder MessageBird. Auch Besucher können abonnieren.",
+    },
+    contentPages: {
+      title: "Inhaltsseiten",
+      text: "Schreib Über-uns-Seite, Impressum, Datenschutzerklärung, Erklärung zur Barrierefreiheit und eigene Seiten in Markdown, pro Sprache, mit Vorschau.",
+    },
+    noContainers: {
+      title: "Auch ohne Docker",
+      text: ".deb- und .rpm-Pakete, Release-Tarballs und ein Installationsskript mit gehärteten systemd-Units, optional mit lokalem PostgreSQL und Mailserver.",
+    },
     lightweight: {
       title: "Schlank und schnell",
       text: "Rund 100 MB Arbeitsspeicher pro Instanz und Lighthouse 100 in allen Kategorien, mobil und am Desktop.",
     },
     branding: {
-      title: "Dein Branding",
-      text: "Logo, Favicon, beliebige Akzentfarbe (der Kontrast wird automatisch angepasst), helles oder dunkles Design, Footer- und Rechtslinks.",
+      title: "Themes und Branding",
+      text: "Vier eingebaute Themes oder dein eigenes, jedes in Hell und Dunkel gegen WCAG 2.2 AA geprüft, mit Live-Editor. Logo, Favicon und Bilder hochladen.",
     },
   },
 };
