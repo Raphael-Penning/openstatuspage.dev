@@ -9,7 +9,7 @@ export const install = [
   "curl -fsSL -o .env https://github.com/Raphael-Penning/openstatuspage/releases/latest/download/env.example",
   `printf 'SECRET_KEY=%s\\nPOSTGRES_PASSWORD=%s\\n' "$(openssl rand -base64 48)" "$(openssl rand -hex 16)" >> .env`,
   "chmod 600 .env",
-  "# edit .env: BASE_URL, ADMIN_EMAIL, ADMIN_PASSWORD",
+  "# edit .env: BASE_URL, ADMIN_EMAIL, ADMIN_PASSWORD, MAIL_DOMAIN",
   "docker compose up -d",
 ].join("\n");
 
@@ -84,7 +84,7 @@ Monitoring adapters: Icinga 2, Uptime Kuma, openITCockpit and a generic webhook 
 ${install}
 \`\`\`
 
-No reverse proxy is included: put your own proxy with HTTPS in front of the app, then open BASE_URL/admin and log in. SQLite works for zero-config setups, PostgreSQL for production. A Helm chart (oci://ghcr.io/raphael-penning/charts/openstatuspage), Kustomize manifests and a split deployment (public page and admin on separate domains, a dedicated worker and a read-only database role) are documented in the guide: ${site.docs("en")}
+Docker Compose 2.23.1 or newer is required. With MAIL_DOMAIN set, the bundled send-only Postfix signs mails with DKIM; the admin shows the SPF, DKIM and DMARC records to publish. No reverse proxy is included: put your own proxy with HTTPS in front of the app (Caddy and nginx templates are in deploy/proxy), then open BASE_URL/admin and log in. Without Docker, use the .deb/.rpm packages or install.sh with systemd. SQLite works for zero-config setups, PostgreSQL for production. A Helm chart (oci://ghcr.io/raphael-penning/charts/openstatuspage), Kustomize manifests and a split deployment (public page and admin on separate domains, a dedicated worker and a read-only database role) are documented in the guide: ${site.docs("en")}
 
 ## FAQ
 
