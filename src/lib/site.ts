@@ -18,7 +18,7 @@ export const site = {
   changelog: "https://github.com/Raphael-Penning/openstatuspage/blob/main/CHANGELOG.md",
   contributing: "https://github.com/Raphael-Penning/openstatuspage/blob/main/CONTRIBUTING.md",
   /** Last content update, used as <lastmod> in the sitemaps. */
-  updated: "2026-11-23",
+  updated: "2026-11-24",
   email: "penning@partlabs.de",
   sponsorMail: "mailto:penning@partlabs.de",
 } as const;

@@ -18,7 +18,7 @@ export type GuideCopy = {
 export type Guide = Record<Locale, GuideCopy>;
 
 /** Date shown as "last updated" on the guides and used in their structured data. */
-export const guidesUpdated = "2026-11-23";
+export const guidesUpdated = "2026-11-24";
 
 export const H2 = ({ id, children }: { id?: string; children: ReactNode }) => (
   <h2 id={id}>{children}</h2>

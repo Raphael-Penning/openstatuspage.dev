@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { site } from "@/lib/site";
 import { H2, H3, Table, type Guide } from "./shared";
 
 const links = {
@@ -46,7 +47,7 @@ export const alternativesGuide: Guide = {
           caption="Open-source status pages compared"
           head={["Project", "Licence", "Runs on", "Where the status comes from", "Notifications"]}
           rows={[
-            ["OpenStatusPage", "AGPL-3.0", "Docker Compose / Helm chart", "Your monitoring: Icinga 2, Uptime Kuma, openITCockpit, webhooks; composed into services", "Email subscriptions for visitors (double opt-in)"],
+            ["OpenStatusPage", "AGPL-3.0", "Docker Compose, Helm chart or .deb/.rpm", "Your monitoring: Icinga 2, Uptime Kuma, openITCockpit, webhooks; composed into services", "Email, webhook (Slack, Teams, Discord) and SMS subscriptions for visitors"],
             ["Cachet", "v2: BSD-3-Clause; 3.x: source-available", "PHP / Laravel", "Manual or via API", "Email subscribers"],
             ["Upptime", "MIT", "GitHub Actions + GitHub Pages", "Own checks, at most every 5 minutes", "Alerts for the team"],
             ["Gatus", "Apache-2.0", "Go, Docker", "Own checks (HTTP, ICMP, TCP, DNS) defined in YAML", "Alerts for the team"],
@@ -63,11 +64,12 @@ export const alternativesGuide: Guide = {
           Built for companies that already monitor their systems and want to tell customers about
           incidents without exposing internal infrastructure. Public services are composed from any
           number of internal checks with aggregation rules; several monitoring nodes can vote on a
-          state. Incidents, maintenance, email subscriptions, private status pages per customer,
-          history import, OIDC single sign-on, a JSON:API and accessible pages that work without
-          JavaScript are included; it runs on Docker Compose or Kubernetes via a Helm chart. <strong>Not a fit</strong> if you have
+          state. Incidents, maintenance, notifications by email, Slack, Teams, Discord and SMS,
+          private status pages per customer, history import, themes, OIDC single sign-on, a
+          JSON:API with OpenAPI description and accessible pages that work without JavaScript are
+          included; it runs on Docker Compose, Kubernetes via a Helm chart or as .deb/.rpm package. <strong>Not a fit</strong> if you have
           no monitoring yet (it runs no checks itself) or need a mature, long-established product:
-          the project is young (version 0.3.1).
+          the project is young (version {site.version}).
         </p>
 
         <H3>Cachet</H3>
@@ -154,7 +156,7 @@ export const alternativesGuide: Guide = {
       },
       {
         q: "Can a self-hosted status page send email updates to customers?",
-        a: "Some can. OpenStatusPage includes email subscriptions with double opt-in for all updates or selected services; Cachet has email subscribers. Upptime, Gatus and Uptime Kuma send alerts to your team but have no built-in subscriptions for visitors.",
+        a: "Some can. OpenStatusPage includes email subscriptions with double opt-in for all updates or selected services and, if the admin allows it, webhook and SMS subscriptions; Cachet has email subscribers. Upptime, Gatus and Uptime Kuma send alerts to your team but have no built-in subscriptions for visitors.",
       },
       {
         q: "Does OpenStatusPage monitor my services?",
@@ -195,7 +197,7 @@ export const alternativesGuide: Guide = {
           caption="Open-Source-Statusseiten im Vergleich"
           head={["Projekt", "Lizenz", "Läuft auf", "Woher der Status kommt", "Benachrichtigungen"]}
           rows={[
-            ["OpenStatusPage", "AGPL-3.0", "Docker Compose / Helm-Chart", "Dein Monitoring: Icinga 2, Uptime Kuma, openITCockpit, Webhooks; zu Diensten zusammengesetzt", "E-Mail-Abos für Besucher (Double-Opt-in)"],
+            ["OpenStatusPage", "AGPL-3.0", "Docker Compose, Helm-Chart oder .deb/.rpm", "Dein Monitoring: Icinga 2, Uptime Kuma, openITCockpit, Webhooks; zu Diensten zusammengesetzt", "Abos für Besucher per E-Mail, Webhook (Slack, Teams, Discord) und SMS"],
             ["Cachet", "v2: BSD-3-Clause; 3.x: Source-available", "PHP / Laravel", "Von Hand oder per API", "E-Mail-Abonnenten"],
             ["Upptime", "MIT", "GitHub Actions + GitHub Pages", "Eigene Checks, höchstens alle 5 Minuten", "Alarme fürs Team"],
             ["Gatus", "Apache-2.0", "Go, Docker", "Eigene Checks (HTTP, ICMP, TCP, DNS) in YAML", "Alarme fürs Team"],
@@ -212,12 +214,13 @@ export const alternativesGuide: Guide = {
           Gebaut für Unternehmen, die ihre Systeme schon überwachen und Kunden über Störungen
           informieren wollen, ohne interne Infrastruktur offenzulegen. Öffentliche Dienste werden
           aus beliebig vielen internen Checks mit Regeln zusammengesetzt; mehrere Monitoring-Knoten
-          können über einen Zustand abstimmen. Vorfälle, Wartungen, E-Mail-Abos, private
-          Statusseiten pro Kunde, Import der Historie, OIDC-Single-Sign-on, eine JSON:API und
-          barrierefreie Seiten, die ohne JavaScript funktionieren, sind dabei; es läuft mit Docker
-          Compose oder per Helm-Chart auf Kubernetes.{" "}
+          können über einen Zustand abstimmen. Vorfälle, Wartungen, Benachrichtigungen per E-Mail,
+          Slack, Teams, Discord und SMS, private Statusseiten pro Kunde, Import der Historie,
+          Themes, OIDC-Single-Sign-on, eine JSON:API mit OpenAPI-Beschreibung und barrierefreie
+          Seiten, die ohne JavaScript funktionieren, sind dabei; es läuft mit Docker Compose, per
+          Helm-Chart auf Kubernetes oder als .deb-/.rpm-Paket.{" "}
           <strong>Passt nicht</strong>, wenn du noch kein Monitoring hast (es prüft selbst nichts)
-          oder ein lange etabliertes Produkt brauchst: Das Projekt ist noch jung (Version 0.3.1).
+          oder ein lange etabliertes Produkt brauchst: Das Projekt ist noch jung (Version {site.version}).
         </p>
 
         <H3>Cachet</H3>
@@ -306,7 +309,7 @@ export const alternativesGuide: Guide = {
       },
       {
         q: "Kann eine selbst gehostete Statusseite Kunden per E-Mail informieren?",
-        a: "Manche schon. OpenStatusPage bietet E-Mail-Abos mit Double-Opt-in für alle Updates oder ausgewählte Dienste; Cachet hat E-Mail-Abonnenten. Upptime, Gatus und Uptime Kuma alarmieren dein Team, haben aber keine eingebauten Abos für Besucher.",
+        a: "Manche schon. OpenStatusPage bietet E-Mail-Abos mit Double-Opt-in für alle Updates oder ausgewählte Dienste und, wenn der Admin es erlaubt, Abos per Webhook und SMS; Cachet hat E-Mail-Abonnenten. Upptime, Gatus und Uptime Kuma alarmieren dein Team, haben aber keine eingebauten Abos für Besucher.",
       },
       {
         q: "Überwacht OpenStatusPage meine Dienste?",

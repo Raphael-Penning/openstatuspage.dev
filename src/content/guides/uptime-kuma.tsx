@@ -30,7 +30,7 @@ export const uptimeKumaGuide: Guide = {
             ["Monitoring sources", "Uptime Kuma itself", "Uptime Kuma plus Icinga 2, openITCockpit and webhooks"],
             ["Several monitoring nodes", "One instance", "Check bundles: nodes in different places vote with weights"],
             ["Incidents", "Pinned incident banner", "Incidents with updates and a filterable history"],
-            ["Customer notifications", "Not built in", "Email subscriptions with double opt-in"],
+            ["Customer notifications", "Not built in", "Email, Slack/Teams/Discord webhook and SMS subscriptions"],
             ["Team access", "Uptime Kuma login", "Admin and editor roles, optional OIDC single sign-on"],
           ]}
         />
@@ -166,7 +166,7 @@ export const uptimeKumaGuide: Guide = {
             ["Monitoring-Quellen", "Uptime Kuma selbst", "Uptime Kuma plus Icinga 2, openITCockpit und Webhooks"],
             ["Mehrere Monitoring-Knoten", "Eine Instanz", "Check-Bündel: Knoten an verschiedenen Orten stimmen gewichtet ab"],
             ["Vorfälle", "Angehefteter Vorfall-Hinweis", "Vorfälle mit Updates und filterbarem Verlauf"],
-            ["Benachrichtigung von Kunden", "Nicht eingebaut", "E-Mail-Abos mit Double-Opt-in"],
+            ["Benachrichtigung von Kunden", "Nicht eingebaut", "Abos per E-Mail, Slack-/Teams-/Discord-Webhook und SMS"],
             ["Zugang fürs Team", "Uptime-Kuma-Login", "Rollen Admin und Redakteur, optional OIDC-Single-Sign-on"],
           ]}
         />
