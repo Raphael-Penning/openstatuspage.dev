@@ -27,7 +27,7 @@ type Copy = {
   publish: {
     title: string;
     body: string;
-    outputs: { key: "page" | "mail" | "feed" | "api"; name: string; note: string }[];
+    outputs: { key: "page" | "mail" | "chat" | "feed" | "api"; name: string; note: string }[];
   };
   privacy: {
     eyebrow: string;
@@ -78,8 +78,9 @@ export const copy: Localized<Copy> = {
       outputs: [
         { key: "page", name: "Public status page", note: "Overview, services, locations, history" },
         { key: "mail", name: "Email subscribers", note: "Double opt-in, per-service" },
+        { key: "chat", name: "Slack, Teams, Discord, SMS", note: "For your team and for visitors" },
         { key: "feed", name: "RSS / Atom", note: "Incidents and maintenance" },
-        { key: "api", name: "JSON:API 1.1", note: "Read status over HTTP" },
+        { key: "api", name: "JSON:API 1.1", note: "With an OpenAPI 3.1 description" },
       ],
     },
     privacy: {
@@ -129,8 +130,9 @@ export const copy: Localized<Copy> = {
       outputs: [
         { key: "page", name: "Öffentliche Statusseite", note: "Übersicht, Dienste, Standorte, Verlauf" },
         { key: "mail", name: "E-Mail-Abos", note: "Double-Opt-in, auch pro Dienst" },
+        { key: "chat", name: "Slack, Teams, Discord, SMS", note: "Fürs Team und für Besucher" },
         { key: "feed", name: "RSS / Atom", note: "Störungen und Wartungen" },
-        { key: "api", name: "JSON:API 1.1", note: "Status per HTTP abfragen" },
+        { key: "api", name: "JSON:API 1.1", note: "Mit OpenAPI-3.1-Beschreibung" },
       ],
     },
     privacy: {
