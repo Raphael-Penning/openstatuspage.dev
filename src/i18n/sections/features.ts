@@ -18,6 +18,12 @@ type FeaturesCopy = {
   noJs: Item;
   seo: Item;
   api: Item;
+  privatePages: Item;
+  history: Item;
+  a11y: Item;
+  kubernetes: Item;
+  lightweight: Item;
+  branding: Item;
 };
 
 export const copy: Localized<FeaturesCopy> = {
@@ -92,6 +98,30 @@ export const copy: Localized<FeaturesCopy> = {
       title: "JSON:API and feeds",
       text: "A JSON:API 1.1 HTTP API with role-based API tokens, plus RSS and Atom feeds for incidents and maintenance.",
     },
+    privatePages: {
+      title: "Private status pages",
+      text: "Share a secret link with selected services, even hidden ones, for a customer or partner. Optional expiry, never indexed, no analytics.",
+    },
+    history: {
+      title: "History import and corrections",
+      text: "Fill up to two years of history from Icinga DB, Uptime Kuma, openITCockpit or CSV. Mark false alarms afterwards without touching the recorded data.",
+    },
+    a11y: {
+      title: "Accessible (WCAG 2.2 AA)",
+      text: "Public page and emails target WCAG 2.2 AA, checked with axe-core. Status is never shown by color alone, and there is no CAPTCHA.",
+    },
+    kubernetes: {
+      title: "Docker Compose, Helm or Kustomize",
+      text: "A compose file per release, a Helm chart with split mode, NetworkPolicies, autoscaling and PodDisruptionBudget, plus Kustomize manifests.",
+    },
+    lightweight: {
+      title: "Light and fast",
+      text: "Around 100 MB of RAM per instance and Lighthouse 100 in every category on mobile and desktop.",
+    },
+    branding: {
+      title: "Your brand",
+      text: "Logo, favicon, any accent color (contrast is adjusted automatically), light or dark theme, footer and legal links.",
+    },
   },
   de: {
     eyebrow: "Funktionen",
@@ -163,6 +193,30 @@ export const copy: Localized<FeaturesCopy> = {
     api: {
       title: "JSON:API und Feeds",
       text: "Eine HTTP-API nach JSON:API 1.1 mit API-Tokens pro Rolle sowie RSS- und Atom-Feeds für Störungen und Wartungen.",
+    },
+    privatePages: {
+      title: "Private Statusseiten",
+      text: "Teile einen geheimen Link mit ausgewählten Diensten, auch verborgenen, für einen Kunden oder Partner. Optional mit Ablaufdatum, nie indexiert, ohne Statistik.",
+    },
+    history: {
+      title: "Historie importieren und korrigieren",
+      text: "Übernimm bis zu zwei Jahre Verlauf aus Icinga DB, Uptime Kuma, openITCockpit oder CSV. Markiere Fehlalarme nachträglich, ohne die aufgezeichneten Daten zu verändern.",
+    },
+    a11y: {
+      title: "Barrierefrei (WCAG 2.2 AA)",
+      text: "Öffentliche Seite und E-Mails zielen auf WCAG 2.2 AA, geprüft mit axe-core. Status wird nie nur über Farbe gezeigt, und es gibt kein CAPTCHA.",
+    },
+    kubernetes: {
+      title: "Docker Compose, Helm oder Kustomize",
+      text: "Eine Compose-Datei pro Release, ein Helm-Chart mit getrenntem Betrieb, NetworkPolicies, Autoscaling und PodDisruptionBudget sowie Kustomize-Manifeste.",
+    },
+    lightweight: {
+      title: "Schlank und schnell",
+      text: "Rund 100 MB Arbeitsspeicher pro Instanz und Lighthouse 100 in allen Kategorien, mobil und am Desktop.",
+    },
+    branding: {
+      title: "Dein Branding",
+      text: "Logo, Favicon, beliebige Akzentfarbe (der Kontrast wird automatisch angepasst), helles oder dunkles Design, Footer- und Rechtslinks.",
     },
   },
 };

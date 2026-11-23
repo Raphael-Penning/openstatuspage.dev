@@ -57,7 +57,8 @@ export function llmsFullTxt() {
   const f = features.en;
   const items = [
     f.privacy, f.composition, f.bundles, f.uptime, f.locations, f.email,
-    f.sso, f.database, f.i18n, f.noJs, f.seo, f.api,
+    f.privatePages, f.history, f.kubernetes, f.sso, f.database, f.i18n,
+    f.noJs, f.a11y, f.lightweight, f.branding, f.seo, f.api,
   ];
   return `# ${site.name}
 

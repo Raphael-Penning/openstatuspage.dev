@@ -104,6 +104,46 @@ const icons = {
       <path d="M16 3h1a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2v0a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-1" />
     </Icon>
   ),
+  link: (
+    <Icon>
+      <path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1" />
+      <path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1" />
+    </Icon>
+  ),
+  history: (
+    <Icon>
+      <path d="M3.5 12a8.5 8.5 0 1 0 2.5-6" />
+      <path d="M3 4v4h4M12 8v4l3 2" />
+    </Icon>
+  ),
+  a11y: (
+    <Icon>
+      <circle cx="12" cy="4.5" r="1.5" />
+      <path d="M5 8.5c2.3.7 4.6 1 7 1s4.7-.3 7-1M12 9.5V14M12 14l-3 6.5M12 14l3 6.5" />
+    </Icon>
+  ),
+  helm: (
+    <Icon>
+      <circle cx="12" cy="12" r="5.5" />
+      <circle cx="12" cy="12" r="1.5" />
+      <path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4M5.3 5.3l2.8 2.8M15.9 15.9l2.8 2.8M5.3 18.7l2.8-2.8M15.9 8.1l2.8-2.8" />
+    </Icon>
+  ),
+  gauge: (
+    <Icon>
+      <path d="M4 17a8.5 8.5 0 1 1 16 0" />
+      <path d="m12 14 4-5" />
+      <circle cx="12" cy="14.5" r="1" />
+    </Icon>
+  ),
+  palette: (
+    <Icon>
+      <path d="M12 3a9 9 0 0 0 0 18c1.1 0 1.8-.8 1.8-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3Z" />
+      <circle cx="7.5" cy="11.5" r="1" />
+      <circle cx="10" cy="7.5" r="1" />
+      <circle cx="14.5" cy="7.5" r="1" />
+    </Icon>
+  ),
   check: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="size-3.5" aria-hidden>
       <path d="m5 12.5 4.5 4.5L19 7.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -426,10 +466,16 @@ export function Features({ lang }: { lang: Locale }) {
               ))}
             </ul>
           </FeatureCard>
+          <FeatureCard icon={icons.link} title={t.privatePages.title} text={t.privatePages.text} />
+          <FeatureCard icon={icons.history} title={t.history.title} text={t.history.text} />
+          <FeatureCard icon={icons.helm} title={t.kubernetes.title} text={t.kubernetes.text} />
           <FeatureCard icon={icons.key} title={t.sso.title} text={t.sso.text} />
           <FeatureCard icon={icons.database} title={t.database.title} text={t.database.text} />
           <FeatureCard icon={icons.languages} title={t.i18n.title} text={t.i18n.text} />
           <FeatureCard icon={icons.server} title={t.noJs.title} text={t.noJs.text} />
+          <FeatureCard icon={icons.a11y} title={t.a11y.title} text={t.a11y.text} />
+          <FeatureCard icon={icons.gauge} title={t.lightweight.title} text={t.lightweight.text} />
+          <FeatureCard icon={icons.palette} title={t.branding.title} text={t.branding.text} />
           <FeatureCard icon={icons.sparkle} title={t.seo.title} text={t.seo.text} />
           <FeatureCard
             className="sm:col-span-2 lg:col-span-1"
