@@ -24,6 +24,7 @@ export const guidePages = {
   kubernetes: { en: "kubernetes-status-page-helm", de: "kubernetes-statusseite-helm" },
   notifications: { en: "status-page-slack-teams-sms", de: "statusseite-slack-teams-sms" },
   withoutDocker: { en: "status-page-without-docker", de: "statusseite-ohne-docker" },
+  themes: { en: "status-page-themes-branding", de: "statusseite-themes-branding" },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export type GuidePage = keyof typeof guidePages;

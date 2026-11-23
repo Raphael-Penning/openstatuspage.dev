@@ -38,6 +38,7 @@ This site (${site.domain}) is the project's landing page, available in English a
 - [A status page on Kubernetes with Helm](${absolute(guidePath("kubernetes", "en"))}): OCI Helm chart, single instance or split public/admin/worker, NetworkPolicies, HPA, hardened pods
 - [Notifications in Slack, Teams, Discord and by SMS](${absolute(guidePath("notifications", "en"))}): team webhooks, signed JSON, SMS providers, visitor subscriptions, SSRF guard
 - [Install a status page without Docker](${absolute(guidePath("withoutDocker", "en"))}): install script, .deb/.rpm packages, hardened systemd units, optional PostgreSQL and Postfix with DKIM
+- [Customize your status page: themes and branding](${absolute(guidePath("themes", "en"))}): built-in and custom themes, WCAG 2.2 AA contrast check, uploads, Markdown content pages
 
 ## Docs
 
