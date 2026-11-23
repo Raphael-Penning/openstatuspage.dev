@@ -24,12 +24,12 @@ const meta = {
   en: {
     title: "OpenStatusPage — the self-hosted, open-source status page",
     description:
-      "Open-source status page that keeps your infrastructure private. Built from Icinga 2, Uptime Kuma, openITCockpit or webhooks. Self-hosted via Docker or Helm.",
+      "Open-source status page that keeps your infrastructure private. Built from Icinga 2, Uptime Kuma or openITCockpit, alerts to Slack, Teams and SMS. Self-hosted.",
   },
   de: {
     title: "OpenStatusPage — die selbst gehostete Open-Source-Statusseite",
     description:
-      "Open-Source-Statusseite, die deine Infrastruktur privat hält. Aus Icinga 2, Uptime Kuma, openITCockpit oder Webhooks. Selbst gehostet per Docker oder Helm.",
+      "Open-Source-Statusseite, die deine Infrastruktur privat hält. Aus Icinga 2, Uptime Kuma oder openITCockpit, Meldungen an Slack, Teams und SMS. Selbst gehostet.",
   },
 } as const;
 

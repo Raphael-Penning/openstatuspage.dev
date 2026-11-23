@@ -9,7 +9,7 @@ export const install = [
   "curl -fsSL -o .env https://github.com/Raphael-Penning/openstatuspage/releases/latest/download/env.example",
   `printf 'SECRET_KEY=%s\\nPOSTGRES_PASSWORD=%s\\n' "$(openssl rand -base64 48)" "$(openssl rand -hex 16)" >> .env`,
   "chmod 600 .env",
-  "# edit .env: BASE_URL, ADMIN_EMAIL, ADMIN_PASSWORD",
+  "# edit .env: BASE_URL, ADMIN_EMAIL, ADMIN_PASSWORD, MAIL_DOMAIN",
   "docker compose up -d",
 ].join("\n");
 
@@ -36,6 +36,9 @@ This site (${site.domain}) is the project's landing page, available in English a
 - [A customer-facing status page for Uptime Kuma](${absolute(guidePath("uptimeKuma", "en"))}): services instead of monitors, check bundles across several Kuma nodes, email subscriptions
 - [A public status page for openITCockpit](${absolute(guidePath("openitcockpit", "en"))}): JSON API pull or Naemon notification push; adapter not yet verified against a real installation
 - [A status page on Kubernetes with Helm](${absolute(guidePath("kubernetes", "en"))}): OCI Helm chart, single instance or split public/admin/worker, NetworkPolicies, HPA, hardened pods
+- [Notifications in Slack, Teams, Discord and by SMS](${absolute(guidePath("notifications", "en"))}): team webhooks, signed JSON, SMS providers, visitor subscriptions, SSRF guard
+- [Install a status page without Docker](${absolute(guidePath("withoutDocker", "en"))}): install script, .deb/.rpm packages, hardened systemd units, optional PostgreSQL and Postfix with DKIM
+- [Customize your status page: themes and branding](${absolute(guidePath("themes", "en"))}): built-in and custom themes, WCAG 2.2 AA contrast check, uploads, Markdown content pages
 
 ## Docs
 
@@ -59,8 +62,8 @@ export function llmsFullTxt() {
   const f = features.en;
   const items = [
     f.privacy, f.composition, f.bundles, f.uptime, f.locations, f.email,
-    f.privatePages, f.history, f.kubernetes, f.sso, f.database, f.i18n,
-    f.noJs, f.a11y, f.lightweight, f.branding, f.seo, f.api,
+    f.privatePages, f.history, f.notifications, f.kubernetes, f.noContainers, f.sso,
+    f.database, f.i18n, f.noJs, f.a11y, f.lightweight, f.branding, f.contentPages, f.seo, f.api,
   ];
   return `# ${site.name}
 
@@ -84,7 +87,7 @@ Monitoring adapters: Icinga 2, Uptime Kuma, openITCockpit and a generic webhook 
 ${install}
 \`\`\`
 
-No reverse proxy is included: put your own proxy with HTTPS in front of the app, then open BASE_URL/admin and log in. SQLite works for zero-config setups, PostgreSQL for production. A Helm chart (oci://ghcr.io/raphael-penning/charts/openstatuspage), Kustomize manifests and a split deployment (public page and admin on separate domains, a dedicated worker and a read-only database role) are documented in the guide: ${site.docs("en")}
+Docker Compose 2.23.1 or newer is required. With MAIL_DOMAIN set, the bundled send-only Postfix signs mails with DKIM; the admin shows the SPF, DKIM and DMARC records to publish. No reverse proxy is included: put your own proxy with HTTPS in front of the app (Caddy and nginx templates are in deploy/proxy), then open BASE_URL/admin and log in. Without Docker, use the .deb/.rpm packages or install.sh with systemd. SQLite works for zero-config setups, PostgreSQL for production. A Helm chart (oci://ghcr.io/raphael-penning/charts/openstatuspage), Kustomize manifests and a split deployment (public page and admin on separate domains, a dedicated worker and a read-only database role) are documented in the guide: ${site.docs("en")}
 
 ## FAQ
 

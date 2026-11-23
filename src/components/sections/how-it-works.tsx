@@ -64,6 +64,12 @@ const outputIcons = {
       <path d="m22 7-10 6L2 7" />
     </Icon>
   ),
+  chat: (
+    <Icon className="size-4">
+      <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" />
+      <path d="M8.5 12h.01M12 12h.01M15.5 12h.01" />
+    </Icon>
+  ),
   feed: (
     <Icon className="size-4">
       <path d="M4 11a9 9 0 0 1 9 9" />

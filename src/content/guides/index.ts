@@ -2,6 +2,9 @@ import type { GuidePage } from "@/lib/routes";
 import { alternativesGuide } from "./alternatives";
 import { icingaGuide } from "./icinga";
 import { kubernetesGuide } from "./kubernetes";
+import { notificationsGuide } from "./notifications";
+import { themesGuide } from "./themes";
+import { withoutDockerGuide } from "./without-docker";
 import { openitcockpitGuide } from "./openitcockpit";
 import { uptimeKumaGuide } from "./uptime-kuma";
 import type { Guide } from "./shared";
@@ -12,6 +15,9 @@ export const guides: Record<GuidePage, Guide> = {
   uptimeKuma: uptimeKumaGuide,
   openitcockpit: openitcockpitGuide,
   kubernetes: kubernetesGuide,
+  notifications: notificationsGuide,
+  withoutDocker: withoutDockerGuide,
+  themes: themesGuide,
 };
 
 /** og:article tags per guide (language-neutral terms). */
@@ -19,6 +25,9 @@ export const guideTags: Record<GuidePage, string[]> = {
   alternatives: ["status page", "Statuspage alternative", "self-hosted", "open source", "Cachet", "Upptime", "Gatus", "Uptime Kuma", "cState", "Kener"],
   icinga: ["Icinga 2", "status page", "monitoring", "self-hosted", "open source"],
   uptimeKuma: ["Uptime Kuma", "status page", "check bundles", "self-hosted", "open source"],
+  notifications: ["status page", "Slack", "Microsoft Teams", "Discord", "SMS", "webhooks", "Twilio", "self-hosted"],
+  withoutDocker: ["status page", "systemd", "Debian", "Ubuntu", "RHEL", ".deb", ".rpm", "self-hosted"],
+  themes: ["status page", "themes", "branding", "WCAG 2.2", "accessibility", "custom design", "self-hosted"],
   kubernetes: ["Kubernetes", "Helm", "status page", "self-hosted", "PostgreSQL", "open source"],
   openitcockpit: ["openITCockpit", "Naemon", "status page", "monitoring", "self-hosted", "open source"],
 };
