@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
+import { guidePath } from "@/lib/routes";
 import { Code, H2, Table, type Guide } from "./shared";
 
 const adapterDoc = `${site.github}/blob/main/docs/adapters/openitcockpit.md`;
@@ -133,7 +134,7 @@ export const openitcockpitGuide: Guide = {
         <H2>Setup in four steps</H2>
         <ol>
           <li>
-            Install OpenStatusPage with Docker Compose or the Helm chart (see the{" "}
+            Install OpenStatusPage with Docker Compose or the <Link href={guidePath("kubernetes", "en")}>Helm chart</Link> (see the{" "}
             <Link href="/en#quickstart">quick start</Link>) behind your reverse proxy with HTTPS.
           </li>
           <li>
@@ -288,7 +289,7 @@ export const openitcockpitGuide: Guide = {
         <H2>Einrichtung in vier Schritten</H2>
         <ol>
           <li>
-            Installiere OpenStatusPage mit Docker Compose oder dem Helm-Chart (siehe{" "}
+            Installiere OpenStatusPage mit Docker Compose oder dem <Link href={guidePath("kubernetes", "de")}>Helm-Chart</Link> (siehe{" "}
             <Link href="/de#quickstart">Schnellstart</Link>) hinter deinem Reverse Proxy mit HTTPS.
           </li>
           <li>
