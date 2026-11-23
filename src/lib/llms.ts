@@ -35,6 +35,7 @@ This site (${site.domain}) is the project's landing page, available in English a
 - [A public status page for Icinga 2](${absolute(guidePath("icinga", "en"))}): REST API pull or notification push, hard states only, no host names for visitors
 - [A customer-facing status page for Uptime Kuma](${absolute(guidePath("uptimeKuma", "en"))}): services instead of monitors, check bundles across several Kuma nodes, email subscriptions
 - [A public status page for openITCockpit](${absolute(guidePath("openitcockpit", "en"))}): JSON API pull or Naemon notification push; adapter not yet verified against a real installation
+- [A status page on Kubernetes with Helm](${absolute(guidePath("kubernetes", "en"))}): OCI Helm chart, single instance or split public/admin/worker, NetworkPolicies, HPA, hardened pods
 
 ## Docs
 
