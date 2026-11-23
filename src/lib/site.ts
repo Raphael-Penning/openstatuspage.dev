@@ -9,8 +9,8 @@ export const site = {
   demo: "https://openstatus.partlabs.de",
   license: "AGPL-3.0",
   /** Latest release of the software (keep in sync with the main repo's CHANGELOG). */
-  version: "0.3.1",
-  versionDate: "2026-11-22",
+  version: "0.4.1",
+  versionDate: "2026-11-23",
   image: "ghcr.io/raphael-penning/openstatuspage",
   docs: (lang: Locale) =>
     `https://github.com/Raphael-Penning/openstatuspage/blob/main/docs/guide/${lang}/01-overview.md`,
