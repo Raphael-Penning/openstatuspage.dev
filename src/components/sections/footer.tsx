@@ -1,6 +1,6 @@
 import { pick, type Locale } from "@/lib/i18n";
 import { site } from "@/lib/site";
-import { anchor, guidePath, legalPath, type Alternates } from "@/lib/routes";
+import { anchor, guideKeys, guidePath, legalPath, type Alternates } from "@/lib/routes";
 import { Container } from "@/components/ui/primitives";
 import { copy } from "@/i18n/sections/footer";
 import { copy as navCopy } from "@/i18n/sections/navbar";
@@ -84,11 +84,7 @@ export function Footer({ lang, alternates }: { lang: Locale; alternates?: Altern
             />
             <Column
               title={guides.title}
-              links={[
-                { href: guidePath("alternatives", lang), label: guides.alternatives },
-                { href: guidePath("icinga", lang), label: guides.icinga },
-                { href: guidePath("uptimeKuma", lang), label: guides.uptimeKuma },
-              ]}
+              links={guideKeys.map((g) => ({ href: guidePath(g, lang), label: guides[g] }))}
             />
             <Column
               title={resources.title}

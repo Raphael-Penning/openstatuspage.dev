@@ -20,6 +20,7 @@ export const guidePages = {
   alternatives: { en: "statuspage-alternatives", de: "statuspage-alternativen" },
   icinga: { en: "icinga-status-page", de: "icinga-statusseite" },
   uptimeKuma: { en: "uptime-kuma-status-page", de: "uptime-kuma-statusseite" },
+  openitcockpit: { en: "openitcockpit-status-page", de: "openitcockpit-statusseite" },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export type GuidePage = keyof typeof guidePages;
