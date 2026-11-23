@@ -55,14 +55,16 @@ export function Hero({ lang }: { lang: Locale }) {
 
       <Container className="flex flex-col items-center text-center">
         <a
-          href={site.github}
+          href={site.releases}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`${t.badge} — ${t.badgeLinkLabel}`}
+          aria-label={`v${site.version} · ${t.badge} — ${t.badgeLinkLabel}`}
           className="animate-fade-up group inline-flex max-w-full items-center gap-2.5 rounded-full border border-line bg-surface/70 py-1.5 pr-3 pl-3.5 text-xs text-muted backdrop-blur transition-colors hover:border-line-strong hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:text-sm"
         >
           <StatusDot tone="ok" pulse />
-          <span className="truncate">{t.badge}</span>
+          <span className="truncate">
+            <span className="font-mono text-fg">v{site.version}</span> · {t.badge}
+          </span>
           <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5" />
         </a>
 
