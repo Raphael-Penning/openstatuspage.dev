@@ -3,6 +3,7 @@ import { alternativesGuide } from "./alternatives";
 import { icingaGuide } from "./icinga";
 import { kubernetesGuide } from "./kubernetes";
 import { notificationsGuide } from "./notifications";
+import { withoutDockerGuide } from "./without-docker";
 import { openitcockpitGuide } from "./openitcockpit";
 import { uptimeKumaGuide } from "./uptime-kuma";
 import type { Guide } from "./shared";
@@ -14,6 +15,7 @@ export const guides: Record<GuidePage, Guide> = {
   openitcockpit: openitcockpitGuide,
   kubernetes: kubernetesGuide,
   notifications: notificationsGuide,
+  withoutDocker: withoutDockerGuide,
 };
 
 /** og:article tags per guide (language-neutral terms). */
@@ -22,6 +24,7 @@ export const guideTags: Record<GuidePage, string[]> = {
   icinga: ["Icinga 2", "status page", "monitoring", "self-hosted", "open source"],
   uptimeKuma: ["Uptime Kuma", "status page", "check bundles", "self-hosted", "open source"],
   notifications: ["status page", "Slack", "Microsoft Teams", "Discord", "SMS", "webhooks", "Twilio", "self-hosted"],
+  withoutDocker: ["status page", "systemd", "Debian", "Ubuntu", "RHEL", ".deb", ".rpm", "self-hosted"],
   kubernetes: ["Kubernetes", "Helm", "status page", "self-hosted", "PostgreSQL", "open source"],
   openitcockpit: ["openITCockpit", "Naemon", "status page", "monitoring", "self-hosted", "open source"],
 };
