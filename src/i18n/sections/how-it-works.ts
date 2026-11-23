@@ -50,7 +50,7 @@ export const copy: Localized<Copy> = {
     stepLabel: "Step",
     connect: {
       title: "Connect monitoring",
-      body: "Plug in the tools you already use. Adapters pull states automatically or accept pushes from anything that can send HTTP.",
+      body: "Plug in the tools you already use. Adapters pull states automatically or accept pushes from anything that can send HTTP. Push only needs outbound HTTPS, so the status page can sit in a DMZ. Existing history can be imported.",
       adapters: [
         { name: "Icinga 2" },
         { name: "Uptime Kuma" },
@@ -91,7 +91,7 @@ export const copy: Localized<Copy> = {
       internalTitle: "Internal only",
       internalItems: ["Check names", "Hostnames", "Check outputs", "Monitoring sources"],
       splitTitle: "Want an even harder boundary?",
-      splitBody: "Run a split deployment: public page and admin on separate domains, a dedicated worker, and a read-only database role for the public side.",
+      splitBody: "Run a split deployment: public page and admin on separate domains, a dedicated worker, and a restricted PostgreSQL role for the public side. Docker Compose and the Helm chart both support it.",
     },
   },
   de: {
@@ -101,7 +101,7 @@ export const copy: Localized<Copy> = {
     stepLabel: "Schritt",
     connect: {
       title: "Monitoring anbinden",
-      body: "Nutze die Werkzeuge, die du schon hast. Adapter holen Zustände automatisch ab oder nehmen sie per HTTP von beliebigen Quellen entgegen.",
+      body: "Nutze die Werkzeuge, die du schon hast. Adapter holen Zustände automatisch ab oder nehmen sie per HTTP von beliebigen Quellen entgegen. Push braucht nur ausgehendes HTTPS, die Statusseite kann also in einer DMZ stehen. Bestehende Historie lässt sich importieren.",
       adapters: [
         { name: "Icinga 2" },
         { name: "Uptime Kuma" },
@@ -142,7 +142,7 @@ export const copy: Localized<Copy> = {
       internalTitle: "Nur intern",
       internalItems: ["Namen der Checks", "Hostnamen", "Check-Ausgaben", "Monitoring-Quellen"],
       splitTitle: "Noch strengere Trennung gewünscht?",
-      splitBody: "Setz auf ein geteiltes Deployment: öffentliche Seite und Verwaltung auf getrennten Domains, ein eigener Worker und eine Datenbankrolle mit reinem Lesezugriff für die öffentliche Seite.",
+      splitBody: "Setz auf ein geteiltes Deployment: öffentliche Seite und Verwaltung auf getrennten Domains, ein eigener Worker und eine eingeschränkte PostgreSQL-Rolle für die öffentliche Seite. Docker Compose und das Helm-Chart unterstützen das.",
     },
   },
 };
