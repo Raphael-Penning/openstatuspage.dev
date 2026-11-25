@@ -77,8 +77,10 @@ export function ShowcaseTabs({ items, labels }: { items: ShowcaseItem[]; labels:
     <div className="showcase">
       <style>{css}</style>
 
-      {/* Views scroll inside their own container on small screens. */}
-      <fieldset className="-mx-4 overflow-x-auto px-4 py-1 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
+      {/* Views scroll inside their own container on small screens. A fieldset is never
+          narrower than its content by default (min-inline-size: min-content), so min-w-0
+          is what makes it scroll instead of being clipped by the section. */}
+      <fieldset className="-mx-4 min-w-0 overflow-x-auto px-4 py-1 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
         <legend className="sr-only">{labels.tabs}</legend>
         <div className="mx-auto flex w-max gap-1 rounded-full border border-line bg-surface/80 p-1 backdrop-blur">
           {items.map((item, i) => (
