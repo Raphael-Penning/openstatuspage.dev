@@ -80,7 +80,9 @@ export function ShowcaseTabs({ items, labels }: { items: ShowcaseItem[]; labels:
       {/* Views scroll inside their own container on small screens. A fieldset is never
           narrower than its content by default (min-inline-size: min-content), so min-w-0
           is what makes it scroll instead of being clipped by the section. */}
-      <fieldset className="-mx-4 min-w-0 overflow-x-auto px-4 py-1 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
+      {/* The edges fade out as a hint that the row continues; the extra right padding lets
+          the last tab scroll fully out of the fade. */}
+      <fieldset className="-mx-4 min-w-0 snap-x snap-mandatory scroll-px-4 overflow-x-auto py-1 pr-10 pl-4 [mask-image:linear-gradient(to_right,transparent,#000_1rem,#000_calc(100%-2.5rem),transparent)] [scrollbar-width:none] sm:mx-0 sm:px-0 sm:[mask-image:none] [&::-webkit-scrollbar]:hidden">
         <legend className="sr-only">{labels.tabs}</legend>
         <div className="mx-auto flex w-max gap-1 rounded-full border border-line bg-surface/80 p-1 backdrop-blur">
           {items.map((item, i) => (
@@ -88,7 +90,7 @@ export function ShowcaseTabs({ items, labels }: { items: ShowcaseItem[]; labels:
               key={item.id}
               className={cx(
                 pill,
-                "px-4 py-2 text-sm font-medium text-muted hover:text-fg has-[:checked]:bg-surface-2 has-[:checked]:text-fg has-[:checked]:shadow-[0_0_0_1px_var(--color-line-strong)_inset]",
+                "snap-start px-4 py-2 text-sm font-medium text-muted hover:text-fg has-[:checked]:bg-surface-2 has-[:checked]:text-fg has-[:checked]:shadow-[0_0_0_1px_var(--color-line-strong)_inset]",
               )}
             >
               <input
