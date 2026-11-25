@@ -82,7 +82,7 @@ export function ShowcaseTabs({ items, labels }: { items: ShowcaseItem[]; labels:
           is what makes it scroll instead of being clipped by the section. */}
       {/* The edges fade out as a hint that the row continues; the extra right padding lets
           the last tab scroll fully out of the fade. */}
-      <fieldset className="-mx-4 min-w-0 snap-x snap-mandatory scroll-px-4 overflow-x-auto py-1 pr-10 pl-4 [mask-image:linear-gradient(to_right,transparent,#000_1rem,#000_calc(100%-2.5rem),transparent)] [scrollbar-width:none] sm:mx-0 sm:px-0 sm:[mask-image:none] [&::-webkit-scrollbar]:hidden">
+      <fieldset className="-mx-4 min-w-0 snap-x snap-mandatory scroll-pr-10 scroll-pl-4 overflow-x-auto py-1 pr-10 pl-4 [mask-image:linear-gradient(to_right,transparent,#000_1rem,#000_calc(100%-2.5rem),transparent)] [scrollbar-width:none] sm:mx-0 sm:px-0 sm:[mask-image:none] [&::-webkit-scrollbar]:hidden">
         <legend className="sr-only">{labels.tabs}</legend>
         <div className="mx-auto flex w-max gap-1 rounded-full border border-line bg-surface/80 p-1 backdrop-blur">
           {items.map((item, i) => (
@@ -99,7 +99,9 @@ export function ShowcaseTabs({ items, labels }: { items: ShowcaseItem[]; labels:
                 id={viewId(item.id)}
                 value={item.id}
                 defaultChecked={i === 0}
-                className="sr-only"
+                // Invisible but as large as the pill: focusing it with the arrow keys then
+                // scrolls the whole tab into view, not just a 1px corner of it.
+                className="absolute inset-0 m-0 cursor-pointer appearance-none rounded-full opacity-0"
               />
               {item.label}
             </label>
